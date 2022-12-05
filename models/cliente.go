@@ -8,7 +8,7 @@ type Cliente struct {
 	Email          string
 	Telefone       string
 	Celular        string
-	DataNascimento string
+	Datanascimento string
 	Sexo           string
 	Profissao      string
 }

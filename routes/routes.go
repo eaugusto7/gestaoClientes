@@ -14,7 +14,8 @@ func HandleRequest() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", controllers.Home)
 	r.HandleFunc("/api/v1/clientes/getAll", controllers.GetAll).Methods("Get")
-
+	r.HandleFunc("/api/v1/clientes/{id}", controllers.GetById).Methods("Get")
+	r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")
 	r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
