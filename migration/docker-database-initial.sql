@@ -17,3 +17,11 @@ create table servicos(
     valor numeric,
     tempo numeric
 );
+
+create table atendimentos(
+    id serial primary key,
+    nome varchar,
+    horario numeric,
+    idservico int,
+    idatendente int
+);

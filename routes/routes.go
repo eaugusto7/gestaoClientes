@@ -28,6 +28,13 @@ func HandleRequest() {
 	r.HandleFunc("/api/v1/servicos/{id}", controllers.UpdateServicos).Methods("Put")
 	r.HandleFunc("/api/v1/servicos/{id}", controllers.DeleteServicos).Methods("Delete")
 
+	//CRUD - Atendimentos
+	r.HandleFunc("/api/v1/atendimentos/insert", controllers.InsertAtendimentos).Methods("Post")
+	r.HandleFunc("/api/v1/atendimentos/getAll", controllers.GetAllAtendimentos).Methods("Get")
+	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.GetByIdAtendimentos).Methods("Get")
+	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.UpdateAtendimentos).Methods("Put")
+	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.DeleteAtendimento).Methods("Delete")
+
 	r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
