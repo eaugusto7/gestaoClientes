@@ -22,11 +22,11 @@ func HandleRequest() {
 	r.HandleFunc("/api/v1/clientes/{id}", controllers.DeleteClient).Methods("Delete")
 
 	//CRUD - Servicos
-	r.HandleFunc("/api/v1/servico/insert", controllers.InsertServicos).Methods("Post")
-	r.HandleFunc("/api/v1/servico/getAll", controllers.GetAllServicos).Methods("Get")
-	r.HandleFunc("/api/v1/servico/{id}", controllers.GetByIdServicos).Methods("Get")
-	r.HandleFunc("/api/v1/servico/{id}", controllers.UpdateServicos).Methods("Put")
-	r.HandleFunc("/api/v1/servico/{id}", controllers.DeleteServicos).Methods("Delete")
+	r.HandleFunc("/api/v1/servicos/insert", controllers.InsertServicos).Methods("Post")
+	r.HandleFunc("/api/v1/servicos/getAll", controllers.GetAllServicos).Methods("Get")
+	r.HandleFunc("/api/v1/servicos/{id}", controllers.GetByIdServicos).Methods("Get")
+	r.HandleFunc("/api/v1/servicos/{id}", controllers.UpdateServicos).Methods("Put")
+	r.HandleFunc("/api/v1/servicos/{id}", controllers.DeleteServicos).Methods("Delete")
 
 	r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))

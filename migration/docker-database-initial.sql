@@ -10,3 +10,10 @@ create table clientes(
     sexo varchar,
     profissao varchar
 );
+
+create table servicos(
+    id serial primary key,
+    nome varchar,
+    valor numeric,
+    tempo numeric
+);

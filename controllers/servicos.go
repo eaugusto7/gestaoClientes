@@ -33,17 +33,17 @@ func InsertServicos(w http.ResponseWriter, r *http.Request) {
 func UpdateServicos(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	var cliente models.Cliente
-	db.DB.First(&cliente, id)
-	json.NewDecoder(r.Body).Decode(&cliente)
-	db.DB.Save(&cliente)
-	json.NewEncoder(w).Encode(cliente)
+	var servico models.Servico
+	db.DB.First(&servico, id)
+	json.NewDecoder(r.Body).Decode(&servico)
+	db.DB.Save(&servico)
+	json.NewEncoder(w).Encode(servico)
 }
 
 func DeleteServicos(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	var cliente models.Cliente
-	db.DB.Delete(&cliente, id)
-	json.NewEncoder(w).Encode(cliente)
+	var servico models.Servico
+	db.DB.Delete(&servico, id)
+	json.NewEncoder(w).Encode(servico)
 }
