@@ -23,9 +23,9 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 func GetById(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	var personalidade models.Cliente
-	db.DB.First(&personalidade, id)
-	json.NewEncoder(w).Encode(personalidade)
+	var cliente models.Cliente
+	db.DB.First(&cliente, id)
+	json.NewEncoder(w).Encode(cliente)
 }
 
 func InsertClient(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func UpdateClient(w http.ResponseWriter, r *http.Request) {
 func DeleteClient(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id := vars["id"]
-	var personalidade models.Cliente
-	db.DB.Delete(&personalidade, id)
-	json.NewEncoder(w).Encode(personalidade)
+	var cliente models.Cliente
+	db.DB.Delete(&cliente, id)
+	json.NewEncoder(w).Encode(cliente)
 }
