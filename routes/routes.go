@@ -13,9 +13,20 @@ import (
 func HandleRequest() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", controllers.Home)
+
+	//Create
+	r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")
+
+	//Read
 	r.HandleFunc("/api/v1/clientes/getAll", controllers.GetAll).Methods("Get")
 	r.HandleFunc("/api/v1/clientes/{id}", controllers.GetById).Methods("Get")
-	r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")
+
+	//Update
+	r.HandleFunc("/api/v1/clientes/{id}", controllers.UpdateClient).Methods("Put")
+
+	//Delete
+	r.HandleFunc("/api/v1/clientes/{id}", controllers.DeleteClient).Methods("Delete")
+
 	r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }

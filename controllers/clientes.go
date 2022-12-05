@@ -34,3 +34,21 @@ func InsertClient(w http.ResponseWriter, r *http.Request) {
 	db.DB.Create(&newClient)
 	json.NewEncoder(w).Encode(newClient)
 }
+
+func UpdateClient(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var cliente models.Cliente
+	db.DB.First(&cliente, id)
+	json.NewDecoder(r.Body).Decode(&cliente)
+	db.DB.Save(&cliente)
+	json.NewEncoder(w).Encode(cliente)
+}
+
+func DeleteClient(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	var personalidade models.Cliente
+	db.DB.Delete(&personalidade, id)
+	json.NewEncoder(w).Encode(personalidade)
+}
