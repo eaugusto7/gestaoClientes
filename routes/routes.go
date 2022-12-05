@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/eaugusto7/gestaoClientes/controllers"
 	"github.com/eaugusto7/gestaoClientes/middleware"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -11,6 +12,9 @@ import (
 
 func HandleRequest() {
 	r := mux.NewRouter()
+	r.HandleFunc("/", controllers.Home)
+	r.HandleFunc("/api/v1/clientes/getAll", controllers.GetAll).Methods("Get")
+
 	r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
