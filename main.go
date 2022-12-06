@@ -8,8 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Teste Commit")
-
 	db.ConectaBanco()
 	fmt.Println("Iniciando Servidor...")
 	routes.HandleRequest()
