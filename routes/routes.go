@@ -5,17 +5,22 @@ import (
 	"net/http"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	"github.com/eaugusto7/gestaoClientes/middleware"
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/handlers"
-	"github.com/gorilla/mux"
 )
 
 func HandleRequest() {
-	r := mux.NewRouter()
-	r.HandleFunc("/", controllers.Home)
+	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
+	r.Static("/assets", "./assets")
+
+	//r := mux.NewRouter()
+	//r.HandleFunc("/", controllers.Home)
+
+	r.GET("/api/v1/clientes/getAll", controllers.GetAll)
 
 	//CRUD - Clientes
-	r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")
+	/*r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")
 	r.HandleFunc("/api/v1/clientes/getAll", controllers.GetAll).Methods("Get")
 	r.HandleFunc("/api/v1/clientes/{id}", controllers.GetById).Methods("Get")
 	r.HandleFunc("/api/v1/clientes/{id}", controllers.UpdateClient).Methods("Put")
@@ -33,8 +38,8 @@ func HandleRequest() {
 	r.HandleFunc("/api/v1/atendimentos/getAll", controllers.GetAllAtendimentos).Methods("Get")
 	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.GetByIdAtendimentos).Methods("Get")
 	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.UpdateAtendimentos).Methods("Put")
-	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.DeleteAtendimento).Methods("Delete")
+	r.HandleFunc("/api/v1/atendimentos/{id}", controllers.DeleteAtendimento).Methods("Delete")*/
 
-	r.Use(middleware.ContentTypeMiddleware)
+	//r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }

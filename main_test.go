@@ -1,15 +1,26 @@
 package main
 
 import (
+	"net/http"
+	"net/http/httptest"
 	"testing"
 
+	"github.com/eaugusto7/gestaoClientes/controllers"
 	db "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
+	"github.com/gin-gonic/gin"
+	"github.com/stretchr/testify/assert"
 )
 
 var ID_Cliente int
 var ID_Atendimentos int
 var ID_Servicos int
+
+func SetupDasRotasDeTeste() *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+	rotas := gin.Default()
+	return rotas
+}
 
 func CriaClienteMock() {
 	cliente := models.Cliente{Nome: "Nome de Teste",
@@ -24,6 +35,11 @@ func CriaClienteMock() {
 	}
 	db.DB.Create(&cliente)
 	ID_Cliente = int(cliente.Id)
+}
+
+func DeletaClienteMock() {
+	var cliente models.Cliente
+	db.DB.Delete(&cliente, ID_Cliente)
 }
 
 func CriaAtendimentoMock() {
@@ -48,5 +64,15 @@ func CriaServicoMock() {
 }
 
 func TestGetAllClientes(t *testing.T) {
+	db.ConectaBanco()
+	CriaClienteMock()
 
+	defer DeletaClienteMock()
+
+	r := SetupDasRotasDeTeste()
+	r.GET("/api/v1/clientes/getAll", controllers.GetAll)
+	req, _ := http.NewRequest("GET", "/api/v1/clientes/getAll", nil)
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+	assert.Equal(t, http.StatusOK, resposta.Code)
 }

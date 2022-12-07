@@ -7,6 +7,7 @@ import (
 
 	db "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
+	"github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
 )
 
@@ -14,10 +15,10 @@ func Home(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Home Page")
 }
 
-func GetAll(w http.ResponseWriter, r *http.Request) {
-	var p []models.Cliente
-	db.DB.Find(&p)
-	json.NewEncoder(w).Encode(p)
+func GetAll(context *gin.Context) {
+	var clientes []models.Cliente
+	db.DB.Find(&clientes)
+	context.JSON(200, clientes)
 }
 
 func GetById(w http.ResponseWriter, r *http.Request) {
