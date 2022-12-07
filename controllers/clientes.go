@@ -21,12 +21,18 @@ func GetAll(context *gin.Context) {
 	context.JSON(200, clientes)
 }
 
-func GetById(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func GetById(context *gin.Context) {
 	var cliente models.Cliente
+	id := context.Params.ByName("id")
 	db.DB.First(&cliente, id)
-	json.NewEncoder(w).Encode(cliente)
+
+	if cliente.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Not found": "Cliente não encontrado"})
+		return
+	}
+
+	context.JSON(http.StatusOK, cliente)
 }
 
 func InsertClient(w http.ResponseWriter, r *http.Request) {

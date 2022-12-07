@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
@@ -74,5 +76,27 @@ func TestGetAllClientes(t *testing.T) {
 	req, _ := http.NewRequest("GET", "/api/v1/clientes/getAll", nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
+	assert.Equal(t, http.StatusOK, resposta.Code)
+}
+
+func TestGetClienteById(t *testing.T) {
+	db.ConectaBanco()
+	CriaClienteMock()
+	defer DeletaClienteMock()
+	r := SetupDasRotasDeTeste()
+	r.GET("/api/v1/clientes/:id", controllers.GetById)
+	req, _ := http.NewRequest("GET", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), nil)
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+
+	var clienteMock models.Cliente
+	json.Unmarshal(resposta.Body.Bytes(), &clienteMock)
+
+	assert.Equal(t, "Nome de Teste", clienteMock.Nome, " - Deveriam ter nomes iguais")
+	assert.Equal(t, "(00) 0 0000 0000", clienteMock.Celular)
+	assert.Equal(t, "123.456.789-09", clienteMock.Cpf)
+	assert.Equal(t, "01/01/2000", clienteMock.Datanascimento)
+	assert.Equal(t, "emailteste@email.com", clienteMock.Email)
+
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
