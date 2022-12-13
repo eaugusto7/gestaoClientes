@@ -17,7 +17,7 @@ func HandleRequest() {
 	r.POST("/api/v1/clientes/insert", controllers.InsertClient)
 	r.GET("/api/v1/clientes/getAll", controllers.GetAllClientes)
 	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
-	r.PUT("/api/v1/clientes/:id", controllers.UpdateClient)
+	r.PATCH("/api/v1/clientes/:id", controllers.UpdateClient)
 	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
 
 	//CRUD - Clientes

@@ -147,3 +147,33 @@ func TestInsertClienteById(t *testing.T) {
 	db.DB.Delete(&clienteModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
+
+func TestUpdateCliente(t *testing.T) {
+	db.ConectaBanco()
+	CriaClienteMock()
+	defer DeletaClienteMock()
+	r := SetupDasRotasDeTeste()
+
+	r.PATCH("/api/v1/clientes/:id", controllers.UpdateClient)
+	cliente := models.Cliente{Nome: "Teste de Edicao do Nome"}
+	valorJson, _ := json.Marshal(cliente)
+
+	req, _ := http.NewRequest("PATCH", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), bytes.NewBuffer(valorJson))
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+
+	var clienteMockAtualizado models.Cliente
+	json.Unmarshal(resposta.Body.Bytes(), &clienteMockAtualizado)
+}
+
+func TestDeleteCliente(t *testing.T) {
+	db.ConectaBanco()
+	CriaClienteMock()
+	r := SetupDasRotasDeTeste()
+	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
+	req, _ := http.NewRequest("DELETE", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), nil)
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+	assert.Equal(t, http.StatusOK, resposta.Code)
+
+}
