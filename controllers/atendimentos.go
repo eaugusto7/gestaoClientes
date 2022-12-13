@@ -1,49 +1,64 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	db "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
-func GetAllAtendimentos(w http.ResponseWriter, r *http.Request) {
-	var a []models.Atendimento
-	db.DB.Find(&a)
-	json.NewEncoder(w).Encode(a)
+func GetAllAtendimentos(context *gin.Context) {
+	var atendimento []models.Atendimento
+	db.DB.Find(&atendimento)
+	context.JSON(200, atendimento)
 }
 
-func GetByIdAtendimentos(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func GetByIdAtendimentos(context *gin.Context) {
 	var atendimento models.Atendimento
+	id := context.Params.ByName("id")
 	db.DB.First(&atendimento, id)
-	json.NewEncoder(w).Encode(atendimento)
+
+	if atendimento.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Not found": "Cliente não encontrado"})
+		return
+	}
+
+	context.JSON(http.StatusOK, atendimento)
 }
 
-func InsertAtendimentos(w http.ResponseWriter, r *http.Request) {
-	var newAtendimento models.Atendimento
-	json.NewDecoder(r.Body).Decode(&newAtendimento)
-	db.DB.Create(&newAtendimento)
-	json.NewEncoder(w).Encode(newAtendimento)
-}
-
-func UpdateAtendimentos(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func InsertAtendimentos(context *gin.Context) {
 	var atendimento models.Atendimento
+	if err := context.ShouldBindJSON(&atendimento); err != nil {
+		context.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error()})
+		return
+	}
+	db.DB.Create(&atendimento)
+	context.JSON(http.StatusOK, atendimento)
+}
+
+func UpdateAtendimentos(context *gin.Context) {
+	var atendimento models.Atendimento
+	id := context.Params.ByName("id")
 	db.DB.First(&atendimento, id)
-	json.NewDecoder(r.Body).Decode(&atendimento)
-	db.DB.Save(&atendimento)
-	json.NewEncoder(w).Encode(atendimento)
+
+	if err := context.ShouldBindJSON(&atendimento); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+
+	db.DB.UpdateColumns(atendimento)
+	context.JSON(http.StatusOK, atendimento)
 }
 
-func DeleteAtendimento(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func DeleteAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
+	id := context.Params.ByName("id")
 	db.DB.Delete(&atendimento, id)
-	json.NewEncoder(w).Encode(atendimento)
+
+	context.JSON(http.StatusOK, gin.H{
+		"Message": "Atendimento Deletado"})
 }
