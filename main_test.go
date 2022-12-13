@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
@@ -37,6 +40,20 @@ func CriaClienteMock() {
 	}
 	db.DB.Create(&cliente)
 	ID_Cliente = int(cliente.Id)
+}
+
+func CriaClienteModel() models.Cliente {
+	cliente := models.Cliente{Nome: "Nome de Teste",
+		Cpf:            "123.456.789-09",
+		Rg:             "00.000.000",
+		Email:          "emailteste@email.com",
+		Telefone:       "(00) 0 0000 0000",
+		Celular:        "(00) 0 0000 0000",
+		Datanascimento: "01/01/2000",
+		Sexo:           "Feminino",
+		Profissao:      "Vendedora",
+	}
+	return cliente
 }
 
 func DeletaClienteMock() {
@@ -101,9 +118,32 @@ func TestGetClienteById(t *testing.T) {
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
-func TesteInsertClienteById(t *testing.T) {
+func TestInsertClienteById(t *testing.T) {
 	db.ConectaBanco()
-	defer DeletaClienteMock()
+
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/clientes/insert", controllers.InsertClient)
+	r.POST("/api/v1/clientes/insert", controllers.InsertClient)
+
+	clienteModelo := CriaClienteModel()
+
+	jsonValue, _ := json.Marshal(clienteModelo)
+	req, _ := http.NewRequest("POST", "/api/v1/clientes/insert", bytes.NewBuffer(jsonValue))
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+
+	//Converte Response para Map
+	bodyBytes, err := io.ReadAll(resposta.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyString := string(bodyBytes)
+
+	mapResponse := map[string]interface{}{}
+	if err := json.Unmarshal([]byte(bodyString), &mapResponse); err != nil {
+		panic(err)
+	}
+
+	//Deleta ClienteMock gerado
+	db.DB.Delete(&clienteModelo, mapResponse["Id"])
+	assert.Equal(t, http.StatusOK, resposta.Code)
 }
