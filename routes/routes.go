@@ -11,13 +11,14 @@ import (
 
 func HandleRequest() {
 	r := gin.Default()
-	//r.LoadHTMLGlob("templates/*")
 	r.Static("/assets", "./assets")
 
-	//r := mux.NewRouter()
-	//r.HandleFunc("/", controllers.Home)
-
-	r.GET("/api/v1/clientes/getAll", controllers.GetAll)
+	//CRUD Clientes
+	r.POST("/api/v1/clientes/insert", controllers.InsertClient)
+	r.GET("/api/v1/clientes/getAll", controllers.GetAllClientes)
+	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
+	r.PUT("/api/v1/clientes/:id", controllers.UpdateClient)
+	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
 
 	//CRUD - Clientes
 	/*r.HandleFunc("/api/v1/clientes/insert", controllers.InsertClient).Methods("Post")

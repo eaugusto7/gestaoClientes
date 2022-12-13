@@ -72,7 +72,7 @@ func TestGetAllClientes(t *testing.T) {
 	defer DeletaClienteMock()
 
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/clientes/getAll", controllers.GetAll)
+	r.GET("/api/v1/clientes/getAll", controllers.GetAllClientes)
 	req, _ := http.NewRequest("GET", "/api/v1/clientes/getAll", nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -84,7 +84,7 @@ func TestGetClienteById(t *testing.T) {
 	CriaClienteMock()
 	defer DeletaClienteMock()
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/clientes/:id", controllers.GetById)
+	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
 	req, _ := http.NewRequest("GET", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -95,8 +95,15 @@ func TestGetClienteById(t *testing.T) {
 	assert.Equal(t, "Nome de Teste", clienteMock.Nome, " - Deveriam ter nomes iguais")
 	assert.Equal(t, "(00) 0 0000 0000", clienteMock.Celular)
 	assert.Equal(t, "123.456.789-09", clienteMock.Cpf)
-	assert.Equal(t, "01/01/2000", clienteMock.Datanascimento)
+	assert.Equal(t, "2000-01-01T00:00:00Z", clienteMock.Datanascimento)
 	assert.Equal(t, "emailteste@email.com", clienteMock.Email)
 
 	assert.Equal(t, http.StatusOK, resposta.Code)
+}
+
+func TesteInsertClienteById(t *testing.T) {
+	db.ConectaBanco()
+	defer DeletaClienteMock()
+	r := SetupDasRotasDeTeste()
+	r.GET("/api/v1/clientes/insert", controllers.InsertClient)
 }
