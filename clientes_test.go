@@ -19,9 +19,6 @@ import (
 
 var ID_Cliente int
 
-/*var ID_Atendimentos int
-var ID_Servicos int*/
-
 func SetupDasRotasDeTeste() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	rotas := gin.Default()
@@ -62,16 +59,6 @@ func DeletaClienteMock() {
 	db.DB.Delete(&cliente, ID_Cliente)
 }
 
-/*func CriaServicoMock() {
-	servicos := models.Servico{
-		Nome:  "Servico Teste",
-		Valor: 20,
-		Tempo: 0.50,
-	}
-	db.DB.Create(&servicos)
-	ID_Servicos = int(servicos.Id)
-}
-*/
 func TestGetAllClientes(t *testing.T) {
 	db.ConectaBanco()
 	CriaClienteMock()
