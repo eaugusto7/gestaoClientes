@@ -21,7 +21,7 @@ func GetByIdAtendimentos(context *gin.Context) {
 
 	if atendimento.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
-			"Not found": "Cliente não encontrado"})
+			"Not found": "Atendimento não encontrado"})
 		return
 	}
 

@@ -1,49 +1,64 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 
 	db "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
-func GetAllServicos(w http.ResponseWriter, r *http.Request) {
-	var s []models.Servico
-	db.DB.Find(&s)
-	json.NewEncoder(w).Encode(s)
+func GetAllServicos(context *gin.Context) {
+	var servico []models.Servico
+	db.DB.Find(&servico)
+	context.JSON(200, servico)
 }
 
-func GetByIdServicos(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func GetByIdServicos(context *gin.Context) {
 	var servico models.Servico
+	id := context.Params.ByName("id")
 	db.DB.First(&servico, id)
-	json.NewEncoder(w).Encode(servico)
+
+	if servico.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Not found": "Servico não encontrado"})
+		return
+	}
+
+	context.JSON(http.StatusOK, servico)
 }
 
-func InsertServicos(w http.ResponseWriter, r *http.Request) {
-	var newServico models.Servico
-	json.NewDecoder(r.Body).Decode(&newServico)
-	db.DB.Create(&newServico)
-	json.NewEncoder(w).Encode(newServico)
-}
-
-func UpdateServicos(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func InsertServicos(context *gin.Context) {
 	var servico models.Servico
+	if err := context.ShouldBindJSON(&servico); err != nil {
+		context.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error()})
+		return
+	}
+	db.DB.Create(&servico)
+	context.JSON(http.StatusOK, servico)
+}
+
+func UpdateServicos(context *gin.Context) {
+	var servico models.Servico
+
+	id := context.Params.ByName("id")
 	db.DB.First(&servico, id)
-	json.NewDecoder(r.Body).Decode(&servico)
-	db.DB.Save(&servico)
-	json.NewEncoder(w).Encode(servico)
+
+	if err := context.ShouldBindJSON(&servico); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error()})
+		return
+	}
+	db.DB.UpdateColumns(servico)
+	context.JSON(http.StatusOK, servico)
 }
 
-func DeleteServicos(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+func DeleteServicos(context *gin.Context) {
 	var servico models.Servico
+	id := context.Params.ByName("id")
 	db.DB.Delete(&servico, id)
-	json.NewEncoder(w).Encode(servico)
+
+	context.JSON(http.StatusOK, gin.H{
+		"Message": "Serviço Deletado"})
 }

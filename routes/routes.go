@@ -21,11 +21,11 @@ func HandleRequest() {
 	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
 
 	//CRUD - Servicos
-	/*r.HandleFunc("/api/v1/servicos/insert", controllers.InsertServicos).Methods("Post")
-	r.HandleFunc("/api/v1/servicos/getAll", controllers.GetAllServicos).Methods("Get")
-	r.HandleFunc("/api/v1/servicos/{id}", controllers.GetByIdServicos).Methods("Get")
-	r.HandleFunc("/api/v1/servicos/{id}", controllers.UpdateServicos).Methods("Put")
-	r.HandleFunc("/api/v1/servicos/{id}", controllers.DeleteServicos).Methods("Delete")*/
+	r.POST("/api/v1/servicos/insert", controllers.InsertServicos)
+	r.GET("/api/v1/servicos/getAll", controllers.GetAllServicos)
+	r.GET("/api/v1/servicos/:id", controllers.GetByIdServicos)
+	r.PATCH("/api/v1/servicos/:id", controllers.UpdateServicos)
+	r.DELETE("/api/v1/servicos/:id", controllers.DeleteServicos)
 
 	//CRUD - Atendimentos
 	r.POST("/api/v1/atendimentos/insert", controllers.InsertAtendimentos)
