@@ -50,7 +50,7 @@ func UpdateAtendimentos(context *gin.Context) {
 		return
 	}
 
-	db.DB.UpdateColumns(atendimento)
+	db.DB.Save(&atendimento)
 	context.JSON(http.StatusOK, atendimento)
 }
 

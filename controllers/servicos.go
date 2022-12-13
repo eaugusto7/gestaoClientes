@@ -50,7 +50,7 @@ func UpdateServicos(context *gin.Context) {
 			"error": err.Error()})
 		return
 	}
-	db.DB.UpdateColumns(servico)
+	db.DB.Save(&servico)
 	context.JSON(http.StatusOK, servico)
 }
 

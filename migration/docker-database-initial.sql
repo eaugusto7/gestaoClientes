@@ -6,7 +6,7 @@ create table clientes(
     email varchar,
     telefone varchar,
     celular varchar,
-    dataNascimento date,
+    dataNascimento varchar,
     sexo varchar,
     profissao varchar
 );

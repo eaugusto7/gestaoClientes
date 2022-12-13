@@ -62,13 +62,7 @@ func UpdateClient(context *gin.Context) {
 		return
 	}
 
-	/*if err := context.ValidaDadosClientes(&cliente); err != nil {
-		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
-		return
-	}*/
-
-	db.DB.UpdateColumns(cliente)
+	db.DB.Save(&cliente)
 	context.JSON(http.StatusOK, cliente)
 }
 

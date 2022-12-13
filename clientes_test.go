@@ -18,8 +18,9 @@ import (
 )
 
 var ID_Cliente int
-var ID_Atendimentos int
-var ID_Servicos int
+
+/*var ID_Atendimentos int
+var ID_Servicos int*/
 
 func SetupDasRotasDeTeste() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
@@ -61,18 +62,7 @@ func DeletaClienteMock() {
 	db.DB.Delete(&cliente, ID_Cliente)
 }
 
-func CriaAtendimentoMock() {
-	atendimento := models.Atendimento{
-		Nome:        "Atendimento Teste",
-		Horario:     14.30,
-		Idservico:   2,
-		Idatendente: 1,
-	}
-	db.DB.Create(&atendimento)
-	ID_Atendimentos = int(atendimento.Id)
-}
-
-func CriaServicoMock() {
+/*func CriaServicoMock() {
 	servicos := models.Servico{
 		Nome:  "Servico Teste",
 		Valor: 20,
@@ -81,7 +71,7 @@ func CriaServicoMock() {
 	db.DB.Create(&servicos)
 	ID_Servicos = int(servicos.Id)
 }
-
+*/
 func TestGetAllClientes(t *testing.T) {
 	db.ConectaBanco()
 	CriaClienteMock()
@@ -112,7 +102,7 @@ func TestGetClienteById(t *testing.T) {
 	assert.Equal(t, "Nome de Teste", clienteMock.Nome, " - Deveriam ter nomes iguais")
 	assert.Equal(t, "(00) 0 0000 0000", clienteMock.Celular)
 	assert.Equal(t, "123.456.789-09", clienteMock.Cpf)
-	assert.Equal(t, "2000-01-01T00:00:00Z", clienteMock.Datanascimento)
+	assert.Equal(t, "01/01/2000", clienteMock.Datanascimento)
 	assert.Equal(t, "emailteste@email.com", clienteMock.Email)
 
 	assert.Equal(t, http.StatusOK, resposta.Code)
