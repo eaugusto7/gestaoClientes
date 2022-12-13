@@ -14,22 +14,22 @@ func HandleRequest() {
 	r.Static("/assets", "./assets")
 
 	//CRUD Clientes
-	r.POST("/api/v1/clientes/insert", controllers.InsertClient)
-	r.GET("/api/v1/clientes/getAll", controllers.GetAllClientes)
+	r.POST("/api/v1/clientes", controllers.InsertClient)
+	r.GET("/api/v1/clientes", controllers.GetAllClientes)
 	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
 	r.PATCH("/api/v1/clientes/:id", controllers.UpdateClient)
 	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
 
 	//CRUD - Servicos
-	r.POST("/api/v1/servicos/insert", controllers.InsertServicos)
-	r.GET("/api/v1/servicos/getAll", controllers.GetAllServicos)
+	r.POST("/api/v1/servicos", controllers.InsertServicos)
+	r.GET("/api/v1/servicos", controllers.GetAllServicos)
 	r.GET("/api/v1/servicos/:id", controllers.GetByIdServicos)
 	r.PATCH("/api/v1/servicos/:id", controllers.UpdateServicos)
 	r.DELETE("/api/v1/servicos/:id", controllers.DeleteServicos)
 
 	//CRUD - Atendimentos
-	r.POST("/api/v1/atendimentos/insert", controllers.InsertAtendimentos)
-	r.GET("/api/v1/atendimentos/getAll", controllers.GetAllAtendimentos)
+	r.POST("/api/v1/atendimentos", controllers.InsertAtendimentos)
+	r.GET("/api/v1/atendimentos", controllers.GetAllAtendimentos)
 	r.GET("/api/v1/atendimentos/:id", controllers.GetByIdAtendimentos)
 	r.PATCH("/api/v1/atendimentos/:id", controllers.UpdateAtendimentos)
 	r.DELETE("/api/v1/atendimentos/:id", controllers.DeleteAtendimento)
