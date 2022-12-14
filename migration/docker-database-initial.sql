@@ -31,3 +31,13 @@ create table atendentes(
     nome varchar,
     telefone varchar
 );
+
+create table produtos(
+    id serial primary key,
+    nome varchar,
+    quantidade int,
+    descricao varchar,
+    fabricante varchar,
+    valorcusto numeric,
+    valorvenda numeric
+);

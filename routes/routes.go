@@ -41,6 +41,13 @@ func HandleRequest() {
 	r.PATCH("/api/v1/atendentes/:id", controllers.UpdateAtendente)
 	r.DELETE("/api/v1/atendentes/:id", controllers.DeleteAtendente)
 
+	//CRUD - Produtos
+	r.POST("/api/v1/produtos", controllers.InsertProduto)
+	r.GET("/api/v1/produtos", controllers.GetAllProdutos)
+	r.GET("/api/v1/produtos/:id", controllers.GetProdutoById)
+	r.PATCH("/api/v1/produtos/:id", controllers.UpdateProduto)
+	r.DELETE("/api/v1/produtos/:id", controllers.DeleteProduto)
+
 	//r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
