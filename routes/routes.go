@@ -49,5 +49,5 @@ func HandleRequest() {
 	r.DELETE("/api/v1/produtos/:id", controllers.DeleteProduto)
 
 	//r.Use(middleware.ContentTypeMiddleware)
-	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
+	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
