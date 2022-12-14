@@ -105,8 +105,8 @@ func TestUpdateAtendente(t *testing.T) {
 	defer DeletaAtendenteMock()
 	r := SetupDasRotasDeTeste()
 
-	r.PATCH("/api/v1/atendentes/"+strconv.Itoa(ID_Atendente), controllers.UpdateAtendimentos)
-	atendente := models.Atendimento{Nome: "Teste de Edicao do Nome - Atendente"}
+	r.PATCH("/api/v1/atendentes/"+strconv.Itoa(ID_Atendente), controllers.UpdateAtendente)
+	atendente := models.Atendente{Nome: "Teste de Edicao do Nome - Atendente"}
 	valorJson, _ := json.Marshal(atendente)
 
 	req, _ := http.NewRequest("PATCH", "/api/v1/atendentes/"+strconv.Itoa(ID_Atendente), bytes.NewBuffer(valorJson))
