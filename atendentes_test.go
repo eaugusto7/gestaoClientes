@@ -20,7 +20,7 @@ var ID_Atendente int
 
 func CriaAtendenteMock() {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
-		Telefone: "(00) 0 0000 0000",
+		Telefone: "(00)000000000",
 	}
 	db.DB.Create(&atendente)
 	ID_Atendente = int(atendente.Id)
@@ -28,7 +28,7 @@ func CriaAtendenteMock() {
 
 func CriaAtendenteModel() models.Atendente {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
-		Telefone: "(00) 0 0000 0000",
+		Telefone: "(00)000000000",
 	}
 	return atendente
 }
@@ -65,7 +65,7 @@ func TestGetAtendenteById(t *testing.T) {
 	json.Unmarshal(resposta.Body.Bytes(), &atendenteMock)
 
 	assert.Equal(t, "Atendente de Teste", atendenteMock.Nome, " - Deveriam ter nomes iguais")
-	assert.Equal(t, "(00) 0 0000 0000", atendenteMock.Telefone)
+	assert.Equal(t, "(00)000000000", atendenteMock.Telefone)
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 

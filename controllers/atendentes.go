@@ -36,6 +36,13 @@ func InsertAtendente(context *gin.Context) {
 			"error": err.Error()})
 		return
 	}
+
+	if err := models.ValidaDadosAtendente(&atendente); err != nil {
+		context.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error()})
+		return
+	}
+
 	db.DB.Create(&atendente)
 	context.JSON(http.StatusOK, atendente)
 }

@@ -35,6 +35,12 @@ func InsertServicos(context *gin.Context) {
 			"error": err.Error()})
 		return
 	}
+
+	if err := models.ValidaDadosServico(&servico); err != nil {
+		context.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error()})
+		return
+	}
 	db.DB.Create(&servico)
 	context.JSON(http.StatusOK, servico)
 }

@@ -30,8 +30,8 @@ func CriaClienteMock() {
 		Cpf:            "123.456.789-09",
 		Rg:             "00.000.000",
 		Email:          "emailteste@email.com",
-		Telefone:       "(00) 0 0000 0000",
-		Celular:        "(00) 0 0000 0000",
+		Telefone:       "(00)000000000",
+		Celular:        "(00)000000000",
 		Datanascimento: "01/01/2000",
 		Sexo:           "Feminino",
 		Profissao:      "Vendedora",
@@ -45,8 +45,8 @@ func CriaClienteModel() models.Cliente {
 		Cpf:            "123.456.789-09",
 		Rg:             "00.000.000",
 		Email:          "emailteste@email.com",
-		Telefone:       "(00) 0 0000 0000",
-		Celular:        "(00) 0 0000 0000",
+		Telefone:       "(00)000000000",
+		Celular:        "(00)000000000",
 		Datanascimento: "01/01/2000",
 		Sexo:           "Feminino",
 		Profissao:      "Vendedora",
@@ -87,7 +87,7 @@ func TestGetClienteById(t *testing.T) {
 	json.Unmarshal(resposta.Body.Bytes(), &clienteMock)
 
 	assert.Equal(t, "Nome de Teste", clienteMock.Nome, " - Deveriam ter nomes iguais")
-	assert.Equal(t, "(00) 0 0000 0000", clienteMock.Celular)
+	assert.Equal(t, "(00)000000000", clienteMock.Celular)
 	assert.Equal(t, "123.456.789-09", clienteMock.Cpf)
 	assert.Equal(t, "01/01/2000", clienteMock.Datanascimento)
 	assert.Equal(t, "emailteste@email.com", clienteMock.Email)

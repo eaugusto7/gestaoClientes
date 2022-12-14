@@ -36,6 +36,13 @@ func InsertProduto(context *gin.Context) {
 			"error": err.Error()})
 		return
 	}
+
+	if err := models.ValidaDadosProdutos(&produto); err != nil {
+		context.JSON(http.StatusBadGateway, gin.H{
+			"error": err.Error()})
+		return
+	}
+
 	db.DB.Create(&produto)
 	context.JSON(http.StatusOK, produto)
 }

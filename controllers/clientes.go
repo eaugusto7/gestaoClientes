@@ -41,11 +41,11 @@ func InsertClient(context *gin.Context) {
 		return
 	}
 
-	/*if err := context.ValidaDadosClientes(&cliente); err != nil {
+	if err := models.ValidaDadosClientes(&cliente); err != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
 			"error": err.Error()})
 		return
-	}*/
+	}
 
 	db.DB.Create(&cliente)
 	context.JSON(http.StatusOK, cliente)
