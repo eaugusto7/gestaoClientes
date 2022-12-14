@@ -25,3 +25,9 @@ create table atendimentos(
     idservico int,
     idatendente int
 );
+
+create table atendentes(
+    id serial primary key,
+    nome varchar,
+    telefone varchar
+);
