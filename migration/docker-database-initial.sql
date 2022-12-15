@@ -41,3 +41,9 @@ create table produtos(
     valorcusto numeric,
     valorvenda numeric
 );
+
+create table logins(
+    id serial primary key,
+    username varchar,
+    password varchar
+);
