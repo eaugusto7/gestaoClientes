@@ -61,7 +61,7 @@ func TestGetLoginById(t *testing.T) {
 	modelJson, _ := json.Marshal(modeloLogin)
 
 	r := SetupDasRotasDeTeste()
-	r.POST("/api/v1/login/", controllers.GetByIdLogin)
+	r.POST("/api/v1/login/", controllers.GetLoginById)
 	req, _ := http.NewRequest("POST", "/api/v1/login/", bytes.NewBuffer(modelJson))
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)

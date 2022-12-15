@@ -11,54 +11,62 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Obtem todos os logins vindos do banco de dados
 func GetAllLogin(context *gin.Context) {
 	var login []models.Login
-	var loginAux []models.Login
+	var loginHelper []models.Login
 
 	database.Database.Find(&login)
 
+	//Define como vazio todos os passwords, para listar no front end não é necessário enviar a senha
 	for _, loginInterator := range login {
-		loginAux = append(loginAux, models.Login{Id: loginInterator.Id, Username: loginInterator.Username, Password: ""})
+		loginHelper = append(loginHelper, models.Login{Id: loginInterator.Id, Username: loginInterator.Username, Password: ""})
 	}
-	context.JSON(200, loginAux)
+	context.JSON(200, loginHelper)
 }
 
-func GetByIdLogin(context *gin.Context) {
+//Obtem o json de um determinado login, filtrado por username
+func GetLoginById(context *gin.Context) {
 	var login models.Login
 	var loginJson models.Login
 
-	if err := context.ShouldBindJSON(&loginJson); err != nil {
+	if error := context.ShouldBindJSON(&loginJson); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
+	//Busca no banco de dados através do username
 	database.Database.Where(models.Login{Username: loginJson.Username}).FirstOrInit(&login)
 
+	//Transforma o password que veio do JSON em código md5
 	hasher := md5.New()
 	hasher.Write([]byte(loginJson.Password))
 	loginJson.Password = hex.EncodeToString(hasher.Sum(nil))
 
+	//Compara se a senha vinda do JSON e a do Banco são as mesmas (Ambas devem ser Md5)
 	if login.Password != loginJson.Password {
 		context.JSON(http.StatusNotFound, gin.H{
-			"Not found": "Login/Senha incorreto"})
+			"Message: ": "Login/Senha incorreto"})
 		return
 	}
 	context.JSON(http.StatusOK, login)
 }
 
+//Cria um novo login no banco de dados
 func InsertLogin(context *gin.Context) {
 	var login models.Login
 
-	if err := context.ShouldBindJSON(&login); err != nil {
+	if error := context.ShouldBindJSON(&login); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
-	if err := models.ValidaDadosLogin(&login); err != nil {
+	if error := models.ValidaDadosLogin(&login); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
+	//Transforma a senha em md5 antes de gravar no banco de dados
 	hasher := md5.New()
 	hasher.Write([]byte(login.Password))
 	login.Password = hex.EncodeToString(hasher.Sum(nil))
@@ -67,17 +75,19 @@ func InsertLogin(context *gin.Context) {
 	context.JSON(http.StatusOK, login)
 }
 
+//Atualiza as informações de um determinado login no banco de dados
 func UpdateLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")
 	database.Database.First(&login, id)
 
-	if err := context.ShouldBindJSON(&login); err != nil {
+	if error := context.ShouldBindJSON(&login); error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
 
+	//Transforma a senha em md5 antes de gravar no banco de dados
 	hasher := md5.New()
 	hasher.Write([]byte(login.Password))
 	login.Password = hex.EncodeToString(hasher.Sum(nil))
@@ -86,6 +96,7 @@ func UpdateLogin(context *gin.Context) {
 	context.JSON(http.StatusOK, login)
 }
 
+//Remove o login indicado pelo id no banco de dados
 func DeleteLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")

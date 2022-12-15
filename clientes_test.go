@@ -78,7 +78,7 @@ func TestGetClienteById(t *testing.T) {
 	CriaClienteMock()
 	defer DeletaClienteMock()
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
+	r.GET("/api/v1/clientes/:id", controllers.GetClienteById)
 	req, _ := http.NewRequest("GET", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -99,7 +99,7 @@ func TestInsertCliente(t *testing.T) {
 	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
-	r.POST("/api/v1/clientes", controllers.InsertClient)
+	r.POST("/api/v1/clientes", controllers.InsertCliente)
 
 	clienteModelo := CriaClienteModel()
 
@@ -131,7 +131,7 @@ func TestUpdateCliente(t *testing.T) {
 	defer DeletaClienteMock()
 	r := SetupDasRotasDeTeste()
 
-	r.PATCH("/api/v1/clientes/:id", controllers.UpdateClient)
+	r.PATCH("/api/v1/clientes/:id", controllers.UpdateCliente)
 	cliente := models.Cliente{Nome: "Teste de Edicao do Nome"}
 	valorJson, _ := json.Marshal(cliente)
 
@@ -147,7 +147,7 @@ func TestDeleteCliente(t *testing.T) {
 	database.ConectaBanco()
 	CriaClienteMock()
 	r := SetupDasRotasDeTeste()
-	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
+	r.DELETE("/api/v1/clientes/:id", controllers.DeleteCliente)
 	req, _ := http.NewRequest("DELETE", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)

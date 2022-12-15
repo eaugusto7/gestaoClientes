@@ -14,24 +14,24 @@ func HandleRequest() {
 	r.Static("/assets", "./assets")
 
 	//CRUD Clientes
-	r.POST("/api/v1/clientes", controllers.InsertClient)
+	r.POST("/api/v1/clientes", controllers.InsertCliente)
 	r.GET("/api/v1/clientes", controllers.GetAllClientes)
-	r.GET("/api/v1/clientes/:id", controllers.GetByIdClientes)
-	r.PATCH("/api/v1/clientes/:id", controllers.UpdateClient)
-	r.DELETE("/api/v1/clientes/:id", controllers.DeleteClient)
+	r.GET("/api/v1/clientes/:id", controllers.GetClienteById)
+	r.PATCH("/api/v1/clientes/:id", controllers.UpdateCliente)
+	r.DELETE("/api/v1/clientes/:id", controllers.DeleteCliente)
 
 	//CRUD - Servicos
-	r.POST("/api/v1/servicos", controllers.InsertServicos)
+	r.POST("/api/v1/servicos", controllers.InsertServico)
 	r.GET("/api/v1/servicos", controllers.GetAllServicos)
-	r.GET("/api/v1/servicos/:id", controllers.GetByIdServicos)
-	r.PATCH("/api/v1/servicos/:id", controllers.UpdateServicos)
-	r.DELETE("/api/v1/servicos/:id", controllers.DeleteServicos)
+	r.GET("/api/v1/servicos/:id", controllers.GetServicosById)
+	r.PATCH("/api/v1/servicos/:id", controllers.UpdateServico)
+	r.DELETE("/api/v1/servicos/:id", controllers.DeleteServico)
 
 	//CRUD - Atendimentos
-	r.POST("/api/v1/atendimentos", controllers.InsertAtendimentos)
+	r.POST("/api/v1/atendimentos", controllers.InsertAtendimento)
 	r.GET("/api/v1/atendimentos", controllers.GetAllAtendimentos)
-	r.GET("/api/v1/atendimentos/:id", controllers.GetByIdAtendimentos)
-	r.PATCH("/api/v1/atendimentos/:id", controllers.UpdateAtendimentos)
+	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
+	r.PATCH("/api/v1/atendimentos/:id", controllers.UpdateAtendimento)
 	r.DELETE("/api/v1/atendimentos/:id", controllers.DeleteAtendimento)
 
 	//CRUD - Atendente
@@ -51,9 +51,10 @@ func HandleRequest() {
 	//CRUD - Login
 	r.POST("/api/v1/login", controllers.InsertLogin)
 	r.GET("/api/v1/login", controllers.GetAllLogin)
-	r.POST("/api/v1/login/", controllers.GetByIdLogin)
+	r.POST("/api/v1/login/", controllers.GetLoginById)
 	r.PATCH("/api/v1/login/:id", controllers.UpdateLogin)
 	r.DELETE("/api/v1/login/:id", controllers.DeleteLogin)
 
+	//Define para a utilizar a porta 8090
 	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }

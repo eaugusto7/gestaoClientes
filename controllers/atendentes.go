@@ -35,13 +35,13 @@ func InsertAtendente(context *gin.Context) {
 
 	if error := context.ShouldBindJSON(&atendente); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"Message error: ": error.Error()})
+			"Message": error.Error()})
 		return
 	}
 
 	if error := models.ValidaDadosAtendente(&atendente); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"Message error: ": error.Error()})
+			"Message": error.Error()})
 		return
 	}
 
@@ -58,7 +58,7 @@ func UpdateAtendente(context *gin.Context) {
 
 	if error := context.ShouldBindJSON(&atendente); error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"Message error: ": error.Error()})
+			"Message": error.Error()})
 		return
 	}
 

@@ -8,36 +8,39 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Obtem todos os atendimentos vindos do banco de dados
 func GetAllAtendimentos(context *gin.Context) {
 	var atendimento []models.Atendimento
 	database.Database.Find(&atendimento)
 	context.JSON(200, atendimento)
 }
 
-func GetByIdAtendimentos(context *gin.Context) {
+//Obtem  o json de um determinado atendimento, filtrado por id
+func GetAtendimentoById(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
 	database.Database.First(&atendimento, id)
 
 	if atendimento.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
-			"Not found": "Atendimento não encontrado"})
+			"Message": "Atendimento não encontrado"})
 		return
 	}
 
 	context.JSON(http.StatusOK, atendimento)
 }
 
-func InsertAtendimentos(context *gin.Context) {
+//Cria um novo atendimento no banco de dados
+func InsertAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
-	if err := context.ShouldBindJSON(&atendimento); err != nil {
+	if error := context.ShouldBindJSON(&atendimento); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
-	if err := models.ValidaDadosAtendimento(&atendimento); err != nil {
+	if error := models.ValidaDadosAtendimento(&atendimento); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
 
@@ -45,14 +48,15 @@ func InsertAtendimentos(context *gin.Context) {
 	context.JSON(http.StatusOK, atendimento)
 }
 
-func UpdateAtendimentos(context *gin.Context) {
+//Atualiza as informações de um determinado atendimento no banco de dados
+func UpdateAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
 	database.Database.First(&atendimento, id)
 
-	if err := context.ShouldBindJSON(&atendimento); err != nil {
+	if error := context.ShouldBindJSON(&atendimento); error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
 
@@ -60,6 +64,7 @@ func UpdateAtendimentos(context *gin.Context) {
 	context.JSON(http.StatusOK, atendimento)
 }
 
+//Remove o atendente indicado pelo id no banco de dados
 func DeleteAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")

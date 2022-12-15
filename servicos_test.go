@@ -58,7 +58,7 @@ func TestGetServicoById(t *testing.T) {
 	CriaServicoMock()
 	defer DeletaServicoMock()
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/servicos/:id", controllers.GetByIdServicos)
+	r.GET("/api/v1/servicos/:id", controllers.GetServicosById)
 	req, _ := http.NewRequest("GET", "/api/v1/servicos/"+strconv.Itoa(ID_Servicos), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -76,7 +76,7 @@ func TestInsertServico(t *testing.T) {
 	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
-	r.POST("/api/v1/servicos", controllers.InsertServicos)
+	r.POST("/api/v1/servicos", controllers.InsertServico)
 
 	servicoModelo := CriaServicoModel()
 
@@ -108,7 +108,7 @@ func TestUpdateServico(t *testing.T) {
 	defer DeletaServicoMock()
 	r := SetupDasRotasDeTeste()
 
-	r.PATCH("/api/v1/servicos/"+strconv.Itoa(ID_Servicos), controllers.UpdateServicos)
+	r.PATCH("/api/v1/servicos/"+strconv.Itoa(ID_Servicos), controllers.UpdateServico)
 	servico := models.Servico{Nome: "Teste de Edicao do Nome - Servico"}
 	valorJson, _ := json.Marshal(servico)
 
@@ -124,7 +124,7 @@ func TestDeleteServico(t *testing.T) {
 	database.ConectaBanco()
 	CriaServicoMock()
 	r := SetupDasRotasDeTeste()
-	r.DELETE("/api/v1/Servicos/:id", controllers.DeleteServicos)
+	r.DELETE("/api/v1/Servicos/:id", controllers.DeleteServico)
 	req, _ := http.NewRequest("DELETE", "/api/v1/Servicos/"+strconv.Itoa(ID_Servicos), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)

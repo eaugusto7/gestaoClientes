@@ -18,6 +18,7 @@ import (
 
 var ID_Atendente int
 
+//Criar um mock que realiza gravação no banco de dados
 func CriaAtendenteMock() {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
 		Telefone: "(00)000000000",
@@ -26,6 +27,7 @@ func CriaAtendenteMock() {
 	ID_Atendente = int(atendente.Id)
 }
 
+//Criar um modelo, não realiza gravação no banco de dados
 func CriaAtendenteModel() models.Atendente {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
 		Telefone: "(00)000000000",
@@ -33,6 +35,7 @@ func CriaAtendenteModel() models.Atendente {
 	return atendente
 }
 
+//Deleta o mock no banco de dados
 func DeletaAtendenteMock() {
 	var atendente models.Atendente
 	database.Database.Delete(&atendente, ID_Atendente)

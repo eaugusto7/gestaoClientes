@@ -60,7 +60,7 @@ func TestGetAtendimentoById(t *testing.T) {
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/atendimentos/:id", controllers.GetByIdAtendimentos)
+	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
 	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/"+strconv.Itoa(ID_Atendimentos), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -80,7 +80,7 @@ func TestInsertAtendimento(t *testing.T) {
 	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
-	r.POST("/api/v1/atendimentos", controllers.InsertAtendimentos)
+	r.POST("/api/v1/atendimentos", controllers.InsertAtendimento)
 
 	atendimentoModelo := CriaAtendimentoModel()
 
@@ -112,7 +112,7 @@ func TestUpdateAtendimento(t *testing.T) {
 	defer DeletaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
 
-	r.PATCH("/api/v1/atendimentos/"+strconv.Itoa(ID_Atendimentos), controllers.UpdateAtendimentos)
+	r.PATCH("/api/v1/atendimentos/"+strconv.Itoa(ID_Atendimentos), controllers.UpdateAtendimento)
 	atendimento := models.Atendimento{Nome: "Teste de Edicao do Nome - Atendimento"}
 	valorJson, _ := json.Marshal(atendimento)
 

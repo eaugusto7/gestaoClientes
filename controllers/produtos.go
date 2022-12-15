@@ -8,12 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//Obtem todos os produtos vindos do banco de dados
 func GetAllProdutos(context *gin.Context) {
 	var produtos []models.Produtos
 	database.Database.Find(&produtos)
 	context.JSON(200, produtos)
 }
 
+//Obtem o json de um determinado produto, filtrado por username
 func GetProdutoById(context *gin.Context) {
 	var produto models.Produtos
 
@@ -22,24 +24,25 @@ func GetProdutoById(context *gin.Context) {
 
 	if produto.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
-			"Not found": "Produto não encontrado"})
+			"Message": "Produto não encontrado"})
 		return
 	}
 	context.JSON(http.StatusOK, produto)
 }
 
+//Cria um novo produto no banco de dados
 func InsertProduto(context *gin.Context) {
 	var produto models.Produtos
 
-	if err := context.ShouldBindJSON(&produto); err != nil {
+	if error := context.ShouldBindJSON(&produto); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
 
-	if err := models.ValidaDadosProdutos(&produto); err != nil {
+	if error := models.ValidaDadosProdutos(&produto); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
 
@@ -47,22 +50,23 @@ func InsertProduto(context *gin.Context) {
 	context.JSON(http.StatusOK, produto)
 }
 
+//Atualiza as informações de um determinado produto no banco de dados
 func UpdateProduto(context *gin.Context) {
 	var produto models.Produtos
 
 	id := context.Params.ByName("id")
 	database.Database.First(&produto, id)
 
-	if err := context.ShouldBindJSON(&produto); err != nil {
+	if error := context.ShouldBindJSON(&produto); error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error()})
+			"Message": error.Error()})
 		return
 	}
-
 	database.Database.Save(&produto)
 	context.JSON(http.StatusOK, produto)
 }
 
+//Remove o produto indicado pelo id no banco de dados
 func DeleteProduto(context *gin.Context) {
 	var produto models.Produtos
 
