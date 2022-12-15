@@ -3,21 +3,21 @@ package controllers
 import (
 	"net/http"
 
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllAtendimentos(context *gin.Context) {
 	var atendimento []models.Atendimento
-	db.DB.Find(&atendimento)
+	database.Database.Find(&atendimento)
 	context.JSON(200, atendimento)
 }
 
 func GetByIdAtendimentos(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
-	db.DB.First(&atendimento, id)
+	database.Database.First(&atendimento, id)
 
 	if atendimento.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
@@ -41,14 +41,14 @@ func InsertAtendimentos(context *gin.Context) {
 		return
 	}
 
-	db.DB.Create(&atendimento)
+	database.Database.Create(&atendimento)
 	context.JSON(http.StatusOK, atendimento)
 }
 
 func UpdateAtendimentos(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
-	db.DB.First(&atendimento, id)
+	database.Database.First(&atendimento, id)
 
 	if err := context.ShouldBindJSON(&atendimento); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -56,14 +56,14 @@ func UpdateAtendimentos(context *gin.Context) {
 		return
 	}
 
-	db.DB.Save(&atendimento)
+	database.Database.Save(&atendimento)
 	context.JSON(http.StatusOK, atendimento)
 }
 
 func DeleteAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
-	db.DB.Delete(&atendimento, id)
+	database.Database.Delete(&atendimento, id)
 
 	context.JSON(http.StatusOK, gin.H{
 		"Message": "Atendimento Deletado"})

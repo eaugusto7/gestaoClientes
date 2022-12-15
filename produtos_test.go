@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -26,7 +26,7 @@ func CriaProdutoMock() {
 		Valorcusto: 1.50,
 		Valorvenda: 2.50,
 	}
-	db.DB.Create(&produto)
+	database.Database.Create(&produto)
 	ID_Produto = int(produto.Id)
 }
 
@@ -43,11 +43,11 @@ func CriaProdutoModel() models.Produtos {
 
 func DeletaProdutoMock() {
 	var produto models.Produtos
-	db.DB.Delete(&produto, ID_Produto)
+	database.Database.Delete(&produto, ID_Produto)
 }
 
 func TestGetAllProduto(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaProdutoMock()
 	defer DeletaProdutoMock()
 
@@ -60,7 +60,7 @@ func TestGetAllProduto(t *testing.T) {
 }
 
 func TestGetProdutosById(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaProdutoMock()
 	defer DeletaProdutoMock()
 	r := SetupDasRotasDeTeste()
@@ -82,7 +82,7 @@ func TestGetProdutosById(t *testing.T) {
 }
 
 func TestInsertProduto(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
 	r.POST("/api/v1/produtos", controllers.InsertProduto)
@@ -107,12 +107,12 @@ func TestInsertProduto(t *testing.T) {
 	}
 
 	//Deleta ClienteMock gerado
-	db.DB.Delete(&produtoModelo, mapResponse["Id"])
+	database.Database.Delete(&produtoModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
 func TestUpdateProduto(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaProdutoMock()
 	defer DeletaProdutoMock()
 	r := SetupDasRotasDeTeste()
@@ -133,7 +133,7 @@ func TestUpdateProduto(t *testing.T) {
 }
 
 func TestDeleteProduto(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaProdutoMock()
 	r := SetupDasRotasDeTeste()
 	r.DELETE("/api/v1/produtos/:id", controllers.DeleteProduto)

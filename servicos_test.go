@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -23,7 +23,7 @@ func CriaServicoMock() {
 		Valor: 28.00,
 		Tempo: 30,
 	}
-	db.DB.Create(&servico)
+	database.Database.Create(&servico)
 	ID_Servicos = int(servico.Id)
 }
 
@@ -37,11 +37,11 @@ func CriaServicoModel() models.Servico {
 
 func DeletaServicoMock() {
 	var servico models.Servico
-	db.DB.Delete(&servico, ID_Servicos)
+	database.Database.Delete(&servico, ID_Servicos)
 }
 
 func TestGetAllServicos(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaServicoMock()
 	defer DeletaServicoMock()
 
@@ -54,7 +54,7 @@ func TestGetAllServicos(t *testing.T) {
 }
 
 func TestGetServicoById(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaServicoMock()
 	defer DeletaServicoMock()
 	r := SetupDasRotasDeTeste()
@@ -73,7 +73,7 @@ func TestGetServicoById(t *testing.T) {
 }
 
 func TestInsertServico(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
 	r.POST("/api/v1/servicos", controllers.InsertServicos)
@@ -98,12 +98,12 @@ func TestInsertServico(t *testing.T) {
 	}
 
 	//Deleta ClienteMock gerado
-	db.DB.Delete(&servicoModelo, mapResponse["Id"])
+	database.Database.Delete(&servicoModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
 func TestUpdateServico(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaServicoMock()
 	defer DeletaServicoMock()
 	r := SetupDasRotasDeTeste()
@@ -121,7 +121,7 @@ func TestUpdateServico(t *testing.T) {
 }
 
 func TestDeleteServico(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaServicoMock()
 	r := SetupDasRotasDeTeste()
 	r.DELETE("/api/v1/Servicos/:id", controllers.DeleteServicos)

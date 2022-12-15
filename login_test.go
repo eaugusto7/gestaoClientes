@@ -13,7 +13,7 @@ import (
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -25,7 +25,7 @@ func CriaLoginMock() {
 	hasher := md5.New()
 	hasher.Write([]byte(login.Password))
 	login.Password = hex.EncodeToString(hasher.Sum(nil))
-	db.DB.Create(&login)
+	database.Database.Create(&login)
 	ID_Login = int(login.Id)
 }
 
@@ -36,11 +36,11 @@ func CriaLoginModel() models.Login {
 
 func DeletaLoginMock() {
 	var login models.Login
-	db.DB.Delete(&login, ID_Login)
+	database.Database.Delete(&login, ID_Login)
 }
 
 func TestGetAllLogin(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaLoginMock()
 	defer DeletaLoginMock()
 
@@ -53,7 +53,7 @@ func TestGetAllLogin(t *testing.T) {
 }
 
 func TestGetLoginById(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaLoginMock()
 	defer DeletaLoginMock()
 
@@ -61,8 +61,8 @@ func TestGetLoginById(t *testing.T) {
 	modelJson, _ := json.Marshal(modeloLogin)
 
 	r := SetupDasRotasDeTeste()
-	r.POST("/api/v1/login/id", controllers.GetByIdLogin)
-	req, _ := http.NewRequest("POST", "/api/v1/login/id", bytes.NewBuffer(modelJson))
+	r.POST("/api/v1/login/", controllers.GetByIdLogin)
+	req, _ := http.NewRequest("POST", "/api/v1/login/", bytes.NewBuffer(modelJson))
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 
@@ -73,7 +73,7 @@ func TestGetLoginById(t *testing.T) {
 }
 
 func TestInsertLogin(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
 	r.POST("/api/v1/login", controllers.InsertLogin)
@@ -98,12 +98,12 @@ func TestInsertLogin(t *testing.T) {
 	}
 
 	//Deleta Login Mock Gerado
-	db.DB.Delete(&loginModelo, mapResponse["Id"])
+	database.Database.Delete(&loginModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
 func TestUpdateLogin(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaLoginMock()
 	defer DeletaLoginMock()
 	r := SetupDasRotasDeTeste()
@@ -121,7 +121,7 @@ func TestUpdateLogin(t *testing.T) {
 }
 
 func TestDeleteLogin(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaLoginMock()
 	r := SetupDasRotasDeTeste()
 	r.DELETE("/api/v1/login/:id", controllers.DeleteLogin)

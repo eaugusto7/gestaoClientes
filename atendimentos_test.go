@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -24,7 +24,7 @@ func CriaAtendimentoMock() {
 		Idservico:   2,
 		Idatendente: 1,
 	}
-	db.DB.Create(&atendimento)
+	database.Database.Create(&atendimento)
 	ID_Atendimentos = int(atendimento.Id)
 }
 
@@ -39,11 +39,11 @@ func CriaAtendimentoModel() models.Atendimento {
 
 func DeletaAtendimentoMock() {
 	var atendimento models.Atendimento
-	db.DB.Delete(&atendimento, ID_Atendimentos)
+	database.Database.Delete(&atendimento, ID_Atendimentos)
 }
 
 func TestGetAllAtendimentos(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
 
@@ -56,7 +56,7 @@ func TestGetAllAtendimentos(t *testing.T) {
 }
 
 func TestGetAtendimentoById(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
@@ -77,7 +77,7 @@ func TestGetAtendimentoById(t *testing.T) {
 }
 
 func TestInsertAtendimento(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
 	r.POST("/api/v1/atendimentos", controllers.InsertAtendimentos)
@@ -102,12 +102,12 @@ func TestInsertAtendimento(t *testing.T) {
 	}
 
 	//Deleta ClienteMock gerado
-	db.DB.Delete(&atendimentoModelo, mapResponse["Id"])
+	database.Database.Delete(&atendimentoModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
 func TestUpdateAtendimento(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
@@ -125,7 +125,7 @@ func TestUpdateAtendimento(t *testing.T) {
 }
 
 func TestDeleteAtendimento(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
 	r.DELETE("/api/v1/atendimentos/:id", controllers.DeleteAtendimento)

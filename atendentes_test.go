@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -22,7 +22,7 @@ func CriaAtendenteMock() {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
 		Telefone: "(00)000000000",
 	}
-	db.DB.Create(&atendente)
+	database.Database.Create(&atendente)
 	ID_Atendente = int(atendente.Id)
 }
 
@@ -35,16 +35,16 @@ func CriaAtendenteModel() models.Atendente {
 
 func DeletaAtendenteMock() {
 	var atendente models.Atendente
-	db.DB.Delete(&atendente, ID_Atendente)
+	database.Database.Delete(&atendente, ID_Atendente)
 }
 
 func TestGetAllAtendente(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendenteMock()
 	defer DeletaAtendenteMock()
 
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/atendentes", controllers.GetAllAtendente)
+	r.GET("/api/v1/atendentes", controllers.GetAllAtendentes)
 	req, _ := http.NewRequest("GET", "/api/v1/atendentes", nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
@@ -52,7 +52,7 @@ func TestGetAllAtendente(t *testing.T) {
 }
 
 func TestGetAtendenteById(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendenteMock()
 	defer DeletaAtendenteMock()
 	r := SetupDasRotasDeTeste()
@@ -70,7 +70,7 @@ func TestGetAtendenteById(t *testing.T) {
 }
 
 func TestInsertAtendente(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 
 	r := SetupDasRotasDeTeste()
 	r.POST("/api/v1/atendentes", controllers.InsertAtendente)
@@ -95,12 +95,12 @@ func TestInsertAtendente(t *testing.T) {
 	}
 
 	//Deleta ClienteMock gerado
-	db.DB.Delete(&atendenteModelo, mapResponse["Id"])
+	database.Database.Delete(&atendenteModelo, mapResponse["Id"])
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
 func TestUpdateAtendente(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendenteMock()
 	defer DeletaAtendenteMock()
 	r := SetupDasRotasDeTeste()
@@ -118,7 +118,7 @@ func TestUpdateAtendente(t *testing.T) {
 }
 
 func TestDeleteAtendente(t *testing.T) {
-	db.ConectaBanco()
+	database.ConectaBanco()
 	CriaAtendenteMock()
 	r := SetupDasRotasDeTeste()
 	r.DELETE("/api/v1/atendentes/:id", controllers.DeleteAtendente)

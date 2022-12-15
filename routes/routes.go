@@ -36,7 +36,7 @@ func HandleRequest() {
 
 	//CRUD - Atendente
 	r.POST("/api/v1/atendentes", controllers.InsertAtendente)
-	r.GET("/api/v1/atendentes", controllers.GetAllAtendente)
+	r.GET("/api/v1/atendentes", controllers.GetAllAtendentes)
 	r.GET("/api/v1/atendentes/:id", controllers.GetAtendenteById)
 	r.PATCH("/api/v1/atendentes/:id", controllers.UpdateAtendente)
 	r.DELETE("/api/v1/atendentes/:id", controllers.DeleteAtendente)
@@ -51,8 +51,9 @@ func HandleRequest() {
 	//CRUD - Login
 	r.POST("/api/v1/login", controllers.InsertLogin)
 	r.GET("/api/v1/login", controllers.GetAllLogin)
-	r.POST("/api/v1/login/id", controllers.GetByIdLogin)
+	r.POST("/api/v1/login/", controllers.GetByIdLogin)
+	r.PATCH("/api/v1/login/:id", controllers.UpdateLogin)
+	r.DELETE("/api/v1/login/:id", controllers.DeleteLogin)
 
-	//r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }

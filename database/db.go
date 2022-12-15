@@ -8,13 +8,13 @@ import (
 )
 
 var (
-	DB  *gorm.DB
-	err error
+	Database *gorm.DB
+	err      error
 )
 
 func ConectaBanco() {
 	stringDeConexao := "host=localhost user=user password=password dbname=database port=5432 sslmode=disable"
-	DB, err = gorm.Open(postgres.Open(stringDeConexao))
+	Database, err = gorm.Open(postgres.Open(stringDeConexao))
 	if err != nil {
 		log.Panic("Erro ao conectar com banco de dados")
 	}

@@ -3,71 +3,75 @@ package controllers
 import (
 	"net/http"
 
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllAtendente(context *gin.Context) {
+//Obtem todos os atendentes vindos do banco de dados
+func GetAllAtendentes(context *gin.Context) {
 	var atendente []models.Atendente
-	db.DB.Find(&atendente)
+	database.Database.Find(&atendente)
 	context.JSON(200, atendente)
 }
 
+//Obtem  o json de um determinado atendente, filtrado por id
 func GetAtendenteById(context *gin.Context) {
 	var atendente models.Atendente
-
 	id := context.Params.ByName("id")
-	db.DB.First(&atendente, id)
+	database.Database.First(&atendente, id)
 
 	if atendente.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
-			"Not found": "Atendente não encontrado"})
+			"Message": "Atendente não encontrado"})
 		return
 	}
 	context.JSON(http.StatusOK, atendente)
 }
 
+//Cria um novo atendente no banco de dados
 func InsertAtendente(context *gin.Context) {
 	var atendente models.Atendente
 
-	if err := context.ShouldBindJSON(&atendente); err != nil {
+	if error := context.ShouldBindJSON(&atendente); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
 
-	if err := models.ValidaDadosAtendente(&atendente); err != nil {
+	if error := models.ValidaDadosAtendente(&atendente); error != nil {
 		context.JSON(http.StatusBadGateway, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
 
-	db.DB.Create(&atendente)
+	database.Database.Create(&atendente)
 	context.JSON(http.StatusOK, atendente)
 }
 
+//Atualiza as informações de um determinado atendente no banco de dados
 func UpdateAtendente(context *gin.Context) {
 	var atendente models.Atendente
 
 	id := context.Params.ByName("id")
-	db.DB.First(&atendente, id)
+	database.Database.First(&atendente, id)
 
-	if err := context.ShouldBindJSON(&atendente); err != nil {
+	if error := context.ShouldBindJSON(&atendente); error != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error()})
+			"Message error: ": error.Error()})
 		return
 	}
 
-	db.DB.Save(&atendente)
+	database.Database.Save(&atendente)
 	context.JSON(http.StatusOK, atendente)
 }
 
+//Remove o atendente indicado pelo id no banco de dados
 func DeleteAtendente(context *gin.Context) {
 	var atendente models.Atendente
 
 	id := context.Params.ByName("id")
-	db.DB.Delete(&atendente, id)
+	database.Database.Delete(&atendente, id)
 
 	context.JSON(http.StatusOK, gin.H{
 		"Message": "Atendente Deletado"})

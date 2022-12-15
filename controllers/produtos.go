@@ -3,14 +3,14 @@ package controllers
 import (
 	"net/http"
 
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/gin-gonic/gin"
 )
 
 func GetAllProdutos(context *gin.Context) {
 	var produtos []models.Produtos
-	db.DB.Find(&produtos)
+	database.Database.Find(&produtos)
 	context.JSON(200, produtos)
 }
 
@@ -18,7 +18,7 @@ func GetProdutoById(context *gin.Context) {
 	var produto models.Produtos
 
 	id := context.Params.ByName("id")
-	db.DB.First(&produto, id)
+	database.Database.First(&produto, id)
 
 	if produto.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
@@ -43,7 +43,7 @@ func InsertProduto(context *gin.Context) {
 		return
 	}
 
-	db.DB.Create(&produto)
+	database.Database.Create(&produto)
 	context.JSON(http.StatusOK, produto)
 }
 
@@ -51,7 +51,7 @@ func UpdateProduto(context *gin.Context) {
 	var produto models.Produtos
 
 	id := context.Params.ByName("id")
-	db.DB.First(&produto, id)
+	database.Database.First(&produto, id)
 
 	if err := context.ShouldBindJSON(&produto); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -59,7 +59,7 @@ func UpdateProduto(context *gin.Context) {
 		return
 	}
 
-	db.DB.Save(&produto)
+	database.Database.Save(&produto)
 	context.JSON(http.StatusOK, produto)
 }
 
@@ -67,7 +67,7 @@ func DeleteProduto(context *gin.Context) {
 	var produto models.Produtos
 
 	id := context.Params.ByName("id")
-	db.DB.Delete(&produto, id)
+	database.Database.Delete(&produto, id)
 
 	context.JSON(http.StatusOK, gin.H{
 		"Message": "Produto Deletado"})

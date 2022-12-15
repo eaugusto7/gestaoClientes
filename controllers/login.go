@@ -6,7 +6,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 
-	db "github.com/eaugusto7/gestaoClientes/database"
+	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +15,7 @@ func GetAllLogin(context *gin.Context) {
 	var login []models.Login
 	var loginAux []models.Login
 
-	db.DB.Find(&login)
+	database.Database.Find(&login)
 
 	for _, loginInterator := range login {
 		loginAux = append(loginAux, models.Login{Id: loginInterator.Id, Username: loginInterator.Username, Password: ""})
@@ -32,7 +32,7 @@ func GetByIdLogin(context *gin.Context) {
 			"error": err.Error()})
 		return
 	}
-	db.DB.Where(models.Login{Username: loginJson.Username}).FirstOrInit(&login)
+	database.Database.Where(models.Login{Username: loginJson.Username}).FirstOrInit(&login)
 
 	hasher := md5.New()
 	hasher.Write([]byte(loginJson.Password))
@@ -63,14 +63,14 @@ func InsertLogin(context *gin.Context) {
 	hasher.Write([]byte(login.Password))
 	login.Password = hex.EncodeToString(hasher.Sum(nil))
 
-	db.DB.Create(&login)
+	database.Database.Create(&login)
 	context.JSON(http.StatusOK, login)
 }
 
 func UpdateLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")
-	db.DB.First(&login, id)
+	database.Database.First(&login, id)
 
 	if err := context.ShouldBindJSON(&login); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
@@ -82,14 +82,14 @@ func UpdateLogin(context *gin.Context) {
 	hasher.Write([]byte(login.Password))
 	login.Password = hex.EncodeToString(hasher.Sum(nil))
 
-	db.DB.Save(&login)
+	database.Database.Save(&login)
 	context.JSON(http.StatusOK, login)
 }
 
 func DeleteLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")
-	db.DB.Delete(&login, id)
+	database.Database.Delete(&login, id)
 
 	context.JSON(http.StatusOK, gin.H{
 		"Message": "Login Deletado"})
