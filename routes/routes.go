@@ -51,7 +51,7 @@ func HandleRequest() {
 	//CRUD - Login
 	r.POST("/api/v1/login", controllers.InsertLogin)
 	r.GET("/api/v1/login", controllers.GetAllLogin)
-	r.POST("/api/v1/login/", controllers.GetByIdLogin)
+	r.POST("/api/v1/login/id", controllers.GetByIdLogin)
 
 	//r.Use(middleware.ContentTypeMiddleware)
 	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
