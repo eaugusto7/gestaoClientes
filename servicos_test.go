@@ -107,10 +107,11 @@ func TestUpdateServico(t *testing.T) {
 	CriaServicoMock()
 	defer DeletaServicoMock()
 	r := SetupDasRotasDeTeste()
-
 	r.PATCH("/api/v1/servicos/"+strconv.Itoa(ID_Servicos), controllers.UpdateServico)
-	servico := models.Servico{Nome: "Teste de Edicao do Nome - Servico"}
-	valorJson, _ := json.Marshal(servico)
+
+	var modeloJson JsonEdicao
+	modeloJson.Nome = "Teste de Edição do Nome"
+	valorJson, _ := json.Marshal(modeloJson)
 
 	req, _ := http.NewRequest("PATCH", "/api/v1/servicos/"+strconv.Itoa(ID_Servicos), bytes.NewBuffer(valorJson))
 	resposta := httptest.NewRecorder()

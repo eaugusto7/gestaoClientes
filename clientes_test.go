@@ -19,6 +19,10 @@ import (
 
 var ID_Cliente int
 
+type JsonEdicao struct {
+	Nome string
+}
+
 func SetupDasRotasDeTeste() *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	rotas := gin.Default()
@@ -130,10 +134,11 @@ func TestUpdateCliente(t *testing.T) {
 	CriaClienteMock()
 	defer DeletaClienteMock()
 	r := SetupDasRotasDeTeste()
+	r.PATCH("/api/v1/clientes/"+strconv.Itoa(ID_Cliente), controllers.UpdateCliente)
 
-	r.PATCH("/api/v1/clientes/:id", controllers.UpdateCliente)
-	cliente := models.Cliente{Nome: "Teste de Edicao do Nome"}
-	valorJson, _ := json.Marshal(cliente)
+	var modeloJson JsonEdicao
+	modeloJson.Nome = "Teste de Edição do Nome"
+	valorJson, _ := json.Marshal(modeloJson)
 
 	req, _ := http.NewRequest("PATCH", "/api/v1/clientes/"+strconv.Itoa(ID_Cliente), bytes.NewBuffer(valorJson))
 	resposta := httptest.NewRecorder()

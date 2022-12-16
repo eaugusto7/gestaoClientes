@@ -20,6 +20,10 @@ import (
 
 var ID_Login int
 
+type JsonEdicaoLogin struct {
+	Nome string
+}
+
 func CriaLoginMock() {
 	login := models.Login{Username: "usertest", Password: "senhateste"}
 	hasher := md5.New()
@@ -109,8 +113,10 @@ func TestUpdateLogin(t *testing.T) {
 	r := SetupDasRotasDeTeste()
 
 	r.PATCH("/api/v1/login/"+strconv.Itoa(ID_Login), controllers.UpdateLogin)
-	login := models.Login{Username: "teste_editando_username"}
-	valorJson, _ := json.Marshal(login)
+
+	var modeloJson JsonEdicaoLogin
+	modeloJson.Nome = "Teste de Edição do User"
+	valorJson, _ := json.Marshal(modeloJson)
 
 	req, _ := http.NewRequest("PATCH", "/api/v1/login/"+strconv.Itoa(ID_Login), bytes.NewBuffer(valorJson))
 	resposta := httptest.NewRecorder()
