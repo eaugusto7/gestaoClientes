@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//
 // GetAllProdutos godoc
 // @Summary Todos Produtos
 // @Description Obtem todos os produtos vindos do banco de dados
@@ -22,7 +21,15 @@ func GetAllProdutos(context *gin.Context) {
 	context.JSON(200, produtos)
 }
 
-//Obtem o json de um determinado produto, filtrado por username
+// GetProdutoById godoc
+// @Summary Busca Produto por Id
+// @Description Obtem  o json de um determinado produto, filtrado por id
+// @Tags Produtos
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Produtos
+// @Failure 404 {object} httputil.HTTPError "Produto não encontrado"
+// @Router /api/v1/produtos/{id} [get]
 func GetProdutoById(context *gin.Context) {
 	var produto models.Produtos
 
@@ -37,7 +44,16 @@ func GetProdutoById(context *gin.Context) {
 	context.JSON(http.StatusOK, produto)
 }
 
-//Cria um novo produto no banco de dados
+// InsertProduto godoc
+// @Summary Insere Produto
+// @Description Cria um novo produto no banco de dados
+// @Tags Produtos
+// @Accept json
+// @Produce json
+// @Param   produto     body    models.Produtos     true		"Json Produto"
+// @Sucess 200 {object} model.Produto
+// @Failure 404 {object} httputil.HTTPError "Erro: Produto não cadastrado"
+// @Router /api/v1/produtos [post]
 func InsertProduto(context *gin.Context) {
 	var produto models.Produtos
 
@@ -57,7 +73,17 @@ func InsertProduto(context *gin.Context) {
 	context.JSON(http.StatusOK, produto)
 }
 
-//Atualiza as informações de um determinado produto no banco de dados
+// UpdateProduto godoc
+// @Summary Atualiza Produto
+// @Description Atualiza as informações de um determinado produto no banco de dados
+// @Tags Produtos
+// @Accept json
+// @Produce json
+// @Param   produto     body    models.Produtos     true		"Json Produto"
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Produto
+// @Failure 400 {object} httputil.HTTPError "Erro: Produto não existe"
+// @Router /api/v1/produtos/{id} [patch]
 func UpdateProduto(context *gin.Context) {
 	var produto models.Produtos
 
@@ -73,7 +99,15 @@ func UpdateProduto(context *gin.Context) {
 	context.JSON(http.StatusOK, produto)
 }
 
-//Remove o produto indicado pelo id no banco de dados
+// DeleteProduto godoc
+// @Summary Deleta Produto
+// @Description Remove o produto indicado pelo id no banco de dados
+// @Tags Produtos
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object}
+// @Failure 400 {object} httputil.HTTPError "Erro: Não encontrado"
+// @Router /api/v1/produtos/{id} [delete]
 func DeleteProduto(context *gin.Context) {
 	var produto models.Produtos
 

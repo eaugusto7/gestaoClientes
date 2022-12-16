@@ -15,6 +15,133 @@
                 ],
                 "summary": "Todos Atendentes",
                 "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo atendente no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendentes"
+                ],
+                "summary": "Insere Atendente",
+                "parameters": [
+                    {
+                        "description": "Json Atendente",
+                        "name": "atendente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Atendente"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Atendente não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/atendentes/{id}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendente, filtrado por id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendentes"
+                ],
+                "summary": "Busca Atendente por Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendente não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove o atendente indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendentes"
+                ],
+                "summary": "Deleta Atendente",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado atendente no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendentes"
+                ],
+                "summary": "Atualiza Atendente",
+                "parameters": [
+                    {
+                        "description": "Json Atendente",
+                        "name": "atendente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Atendente"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Atendente não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
             }
         },
         "/api/v1/atendimentos": {
@@ -28,6 +155,133 @@
                 ],
                 "summary": "Todos Atendimentos",
                 "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo atendimento no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Insere Atendimento",
+                "parameters": [
+                    {
+                        "description": "Json Atendimento",
+                        "name": "atendimento",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Atendimento"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Atendimento não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/atendimentos/{id}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendimento, filtrado por id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Busca Atendimento por Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendimento não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove o atendente indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Deleta Atendimento",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado atendimento no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Atualiza Atendimento",
+                "parameters": [
+                    {
+                        "description": "Json Atendimento",
+                        "name": "atendimento",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Atendimento"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Atendimento não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
             }
         },
         "/api/v1/clientes": {
@@ -84,7 +338,7 @@
                 "tags": [
                     "Clientes"
                 ],
-                "summary": "Cliente por Id",
+                "summary": "Busca Cliente por Id",
                 "parameters": [
                     {
                         "type": "integer",
@@ -181,6 +435,140 @@
                 ],
                 "summary": "Todos Usuários",
                 "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo login no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logins"
+                ],
+                "summary": "Insere Login",
+                "parameters": [
+                    {
+                        "description": "Json Login",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Login não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login/": {
+            "post": {
+                "description": "Obtem o json de um determinado login, filtrado por username",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logins"
+                ],
+                "summary": "Busca Usuário",
+                "parameters": [
+                    {
+                        "description": "Json Login",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Login"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Login não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/login/{id}": {
+            "delete": {
+                "description": "Remove o login indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logins"
+                ],
+                "summary": "Deleta Login",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado login no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Logins"
+                ],
+                "summary": "Atualiza Login",
+                "parameters": [
+                    {
+                        "description": "Json Login",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Login"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Login não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
             }
         },
         "/api/v1/produtos": {
@@ -194,6 +582,273 @@
                 ],
                 "summary": "Todos Produtos",
                 "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo produto no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Insere Produto",
+                "parameters": [
+                    {
+                        "description": "Json Produto",
+                        "name": "produto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Produtos"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Produto não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/produtos/{id}": {
+            "get": {
+                "description": "Obtem  o json de um determinado produto, filtrado por id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Busca Produto por Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Produto não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove o produto indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Deleta Produto",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado produto no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Produtos"
+                ],
+                "summary": "Atualiza Produto",
+                "parameters": [
+                    {
+                        "description": "Json Produto",
+                        "name": "produto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Produtos"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Produto não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/servicos": {
+            "get": {
+                "description": "Obtem todos os serviços vindos do banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Serviços"
+                ],
+                "summary": "Todos Serviços",
+                "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo serviço no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Serviços"
+                ],
+                "summary": "Insere Serviço",
+                "parameters": [
+                    {
+                        "description": "Json Serviço",
+                        "name": "servico",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Servico"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Serviço não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/servicos/{id}": {
+            "get": {
+                "description": "Obtem  o json de um determinado serviço, filtrado por id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Serviços"
+                ],
+                "summary": "Busca Serviço por Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Serviço não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove o serviço indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Serviços"
+                ],
+                "summary": "Deleta Serviço",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado serviço no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Serviços"
+                ],
+                "summary": "Atualiza Serviço",
+                "parameters": [
+                    {
+                        "description": "Json Serviços",
+                        "name": "produto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Servico"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Serviço não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
             }
         }
     },
@@ -208,6 +863,40 @@
                 "message": {
                     "type": "string",
                     "example": "status bad request"
+                }
+            }
+        },
+        "models.Atendente": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "telefone": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Atendimento": {
+            "type": "object",
+            "properties": {
+                "horario": {
+                    "type": "number"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "idatendente": {
+                    "type": "integer"
+                },
+                "idservico": {
+                    "type": "integer"
+                },
+                "nome": {
+                    "type": "string"
                 }
             }
         },
@@ -244,6 +933,63 @@
                 },
                 "telefone": {
                     "type": "string"
+                }
+            }
+        },
+        "models.Login": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Produtos": {
+            "type": "object",
+            "properties": {
+                "descricao": {
+                    "type": "string"
+                },
+                "fabricante": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "quantidade": {
+                    "type": "integer"
+                },
+                "valorcusto": {
+                    "type": "number"
+                },
+                "valorvenda": {
+                    "type": "number"
+                }
+            }
+        },
+        "models.Servico": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "nome": {
+                    "type": "string"
+                },
+                "tempo": {
+                    "type": "number"
+                },
+                "valor": {
+                    "type": "number"
                 }
             }
         }

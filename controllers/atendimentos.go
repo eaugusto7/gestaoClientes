@@ -21,7 +21,15 @@ func GetAllAtendimentos(context *gin.Context) {
 	context.JSON(200, atendimento)
 }
 
-//Obtem  o json de um determinado atendimento, filtrado por id
+// GetAtendimentoById godoc
+// @Summary Busca Atendimento por Id
+// @Description Obtem  o json de um determinado atendimento, filtrado por id
+// @Tags Atendimentos
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 404 {object} httputil.HTTPError "Atendimento não encontrado"
+// @Router /api/v1/atendimentos/{id} [get]
 func GetAtendimentoById(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
@@ -36,7 +44,16 @@ func GetAtendimentoById(context *gin.Context) {
 	context.JSON(http.StatusOK, atendimento)
 }
 
-//Cria um novo atendimento no banco de dados
+// InsertAtendimento godoc
+// @Summary Insere Atendimento
+// @Description Cria um novo atendimento no banco de dados
+// @Tags Atendimentos
+// @Accept json
+// @Produce json
+// @Param   atendimento     body    models.Atendimento     true		"Json Atendimento"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 404 {object} httputil.HTTPError "Erro: Atendimento não cadastrado"
+// @Router /api/v1/atendimentos [post]
 func InsertAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	if error := context.ShouldBindJSON(&atendimento); error != nil {
@@ -54,7 +71,17 @@ func InsertAtendimento(context *gin.Context) {
 	context.JSON(http.StatusOK, atendimento)
 }
 
-//Atualiza as informações de um determinado atendimento no banco de dados
+// UpdateAtendimento godoc
+// @Summary Atualiza Atendimento
+// @Description Atualiza as informações de um determinado atendimento no banco de dados
+// @Tags Atendimentos
+// @Accept json
+// @Produce json
+// @Param   atendimento     body    models.Atendimento     true		"Json Atendimento"
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 400 {object} httputil.HTTPError "Erro: Atendimento não existe"
+// @Router /api/v1/atendimentos/{id} [patch]
 func UpdateAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")
@@ -70,7 +97,15 @@ func UpdateAtendimento(context *gin.Context) {
 	context.JSON(http.StatusOK, atendimento)
 }
 
-//Remove o atendente indicado pelo id no banco de dados
+// DeleteAtendimento godoc
+// @Summary Deleta Atendimento
+// @Description Remove o atendente indicado pelo id no banco de dados
+// @Tags Atendimentos
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object}
+// @Failure 400 {object} httputil.HTTPError "Erro: Não encontrado"
+// @Router /api/v1/atendimentos/{id} [delete]
 func DeleteAtendimento(context *gin.Context) {
 	var atendimento models.Atendimento
 	id := context.Params.ByName("id")

@@ -28,10 +28,24 @@ func GetAllLogin(context *gin.Context) {
 	for _, loginInterator := range login {
 		loginHelper = append(loginHelper, models.Login{Id: loginInterator.Id, Username: loginInterator.Username, Password: ""})
 	}
+	if loginHelper == nil {
+		context.JSON(200, login)
+		return
+	}
+
 	context.JSON(200, loginHelper)
 }
 
-//Obtem o json de um determinado login, filtrado por username
+// GetLoginById godoc
+// @Summary Busca Usuário
+// @Description Obtem o json de um determinado login, filtrado por username
+// @Tags Logins
+// @Accept json
+// @Produce json
+// @Param   login     body    models.Login     true		"Json Login"
+// @Sucess 200 {object} model.Login
+// @Failure 404 {object} httputil.HTTPError "Erro: Login não encontrado"
+// @Router /api/v1/login/ [post]
 func GetLoginById(context *gin.Context) {
 	var login models.Login
 	var loginJson models.Login
@@ -58,7 +72,17 @@ func GetLoginById(context *gin.Context) {
 	context.JSON(http.StatusOK, login)
 }
 
-//Cria um novo login no banco de dados
+//
+// InsertLogin godoc
+// @Summary Insere Login
+// @Description Cria um novo login no banco de dados
+// @Tags Logins
+// @Accept json
+// @Produce json
+// @Param   login     body    models.Login     true		"Json Login"
+// @Sucess 200 {object} model.Login
+// @Failure 404 {object} httputil.HTTPError "Erro: Login não cadastrado"
+// @Router /api/v1/login [post]
 func InsertLogin(context *gin.Context) {
 	var login models.Login
 
@@ -81,7 +105,17 @@ func InsertLogin(context *gin.Context) {
 	context.JSON(http.StatusOK, login)
 }
 
-//Atualiza as informações de um determinado login no banco de dados
+// UpdateLogin godoc
+// @Summary Atualiza Login
+// @Description Atualiza as informações de um determinado login no banco de dados
+// @Tags Logins
+// @Accept json
+// @Produce json
+// @Param   login     body    models.Login     true		"Json Login"
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Login
+// @Failure 400 {object} httputil.HTTPError "Erro: Login não existe"
+// @Router /api/v1/login/{id} [patch]
 func UpdateLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")
@@ -102,7 +136,15 @@ func UpdateLogin(context *gin.Context) {
 	context.JSON(http.StatusOK, login)
 }
 
-//Remove o login indicado pelo id no banco de dados
+// DeleteLogin godoc
+// @Summary Deleta Login
+// @Description Remove o login indicado pelo id no banco de dados
+// @Tags Logins
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object}
+// @Failure 400 {object} httputil.HTTPError "Erro: Não encontrado"
+// @Router /api/v1/login/{id} [delete]
 func DeleteLogin(context *gin.Context) {
 	var login models.Login
 	id := context.Params.ByName("id")

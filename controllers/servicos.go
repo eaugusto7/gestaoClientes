@@ -8,14 +8,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Obtem todos os serviços vindos do banco de dados
+// GetAllServicos godoc
+// @Summary Todos Serviços
+// @Description Obtem todos os serviços vindos do banco de dados
+// @Tags Serviços
+// @Produce json
+// @Sucess 200 [object] model.Servico
+// @Router /api/v1/servicos [get]
 func GetAllServicos(context *gin.Context) {
 	var servico []models.Servico
 	database.Database.Find(&servico)
 	context.JSON(200, servico)
 }
 
-//Obtem o json de um determinado serviço, filtrado por id
+// GetServicosById godoc
+// @Summary Busca Serviço por Id
+// @Description Obtem  o json de um determinado serviço, filtrado por id
+// @Tags Serviços
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Servico
+// @Failure 404 {object} httputil.HTTPError "Serviço não encontrado"
+// @Router /api/v1/servicos/{id} [get]
 func GetServicosById(context *gin.Context) {
 	var servico models.Servico
 	id := context.Params.ByName("id")
@@ -30,7 +44,16 @@ func GetServicosById(context *gin.Context) {
 	context.JSON(http.StatusOK, servico)
 }
 
-//Cria um novo serviço no banco de dados
+// InsertServico godoc
+// @Summary Insere Serviço
+// @Description Cria um novo serviço no banco de dados
+// @Tags Serviços
+// @Accept json
+// @Produce json
+// @Param   servico     body    models.Servico     true		"Json Serviço"
+// @Sucess 200 {object} model.Servico
+// @Failure 404 {object} httputil.HTTPError "Erro: Serviço não cadastrado"
+// @Router /api/v1/servicos [post]
 func InsertServico(context *gin.Context) {
 	var servico models.Servico
 	if error := context.ShouldBindJSON(&servico); error != nil {
@@ -48,7 +71,17 @@ func InsertServico(context *gin.Context) {
 	context.JSON(http.StatusOK, servico)
 }
 
-//Atualiza as informações de um determinado serviço no banco de dados
+// UpdateServico godoc
+// @Summary Atualiza Serviço
+// @Description Atualiza as informações de um determinado serviço no banco de dados
+// @Tags Serviços
+// @Accept json
+// @Produce json
+// @Param   produto     body    models.Servico     true		"Json Serviços"
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Servico
+// @Failure 400 {object} httputil.HTTPError "Erro: Serviço não existe"
+// @Router /api/v1/servicos/{id} [patch]
 func UpdateServico(context *gin.Context) {
 	var servico models.Servico
 
@@ -64,7 +97,15 @@ func UpdateServico(context *gin.Context) {
 	context.JSON(http.StatusOK, servico)
 }
 
-//Remove o serviço indicado pelo id no banco de dados
+// DeleteServico godoc
+// @Summary Deleta Serviço
+// @Description Remove o serviço indicado pelo id no banco de dados
+// @Tags Serviços
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object}
+// @Failure 400 {object} httputil.HTTPError "Erro: Não encontrado"
+// @Router /api/v1/servicos/{id} [delete]
 func DeleteServico(context *gin.Context) {
 	var servico models.Servico
 	id := context.Params.ByName("id")

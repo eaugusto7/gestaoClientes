@@ -22,7 +22,15 @@ func GetAllAtendentes(context *gin.Context) {
 	context.JSON(200, atendente)
 }
 
-//Obtem  o json de um determinado atendente, filtrado por id
+// GetAtendenteById godoc
+// @Summary Busca Atendente por Id
+// @Description Obtem  o json de um determinado atendente, filtrado por id
+// @Tags Atendentes
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Atendente
+// @Failure 404 {object} httputil.HTTPError "Atendente não encontrado"
+// @Router /api/v1/atendentes/{id} [get]
 func GetAtendenteById(context *gin.Context) {
 	var atendente models.Atendente
 	id := context.Params.ByName("id")
@@ -36,7 +44,16 @@ func GetAtendenteById(context *gin.Context) {
 	context.JSON(http.StatusOK, atendente)
 }
 
-//Cria um novo atendente no banco de dados
+// InsertAtendente godoc
+// @Summary Insere Atendente
+// @Description Cria um novo atendente no banco de dados
+// @Tags Atendentes
+// @Accept json
+// @Produce json
+// @Param   atendente     body    models.Atendente     true		"Json Atendente"
+// @Sucess 200 {object} model.Atendente
+// @Failure 404 {object} httputil.HTTPError "Erro: Atendente não cadastrado"
+// @Router /api/v1/atendentes [post]
 func InsertAtendente(context *gin.Context) {
 	var atendente models.Atendente
 
@@ -56,7 +73,17 @@ func InsertAtendente(context *gin.Context) {
 	context.JSON(http.StatusOK, atendente)
 }
 
-//Atualiza as informações de um determinado atendente no banco de dados
+// UpdateAtendente godoc
+// @Summary Atualiza Atendente
+// @Description Atualiza as informações de um determinado atendente no banco de dados
+// @Tags Atendentes
+// @Accept json
+// @Produce json
+// @Param   atendente     body    models.Atendente     true		"Json Atendente"
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object} model.Atendente
+// @Failure 400 {object} httputil.HTTPError "Erro: Atendente não existe"
+// @Router /api/v1/atendentes/{id} [patch]
 func UpdateAtendente(context *gin.Context) {
 	var atendente models.Atendente
 
@@ -73,7 +100,15 @@ func UpdateAtendente(context *gin.Context) {
 	context.JSON(http.StatusOK, atendente)
 }
 
-//Remove o atendente indicado pelo id no banco de dados
+// DeleteAtendente godoc
+// @Summary Deleta Atendente
+// @Description Remove o atendente indicado pelo id no banco de dados
+// @Tags Atendentes
+// @Produce json
+// @Param   id     path    int     true        "Id"
+// @Sucess 200 {object}
+// @Failure 400 {object} httputil.HTTPError "Erro: Não encontrado"
+// @Router /api/v1/atendentes/{id} [delete]
 func DeleteAtendente(context *gin.Context) {
 	var atendente models.Atendente
 

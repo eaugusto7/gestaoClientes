@@ -8,6 +8,28 @@ definitions:
         example: status bad request
         type: string
     type: object
+  models.Atendente:
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      telefone:
+        type: string
+    type: object
+  models.Atendimento:
+    properties:
+      horario:
+        type: number
+      id:
+        type: integer
+      idatendente:
+        type: integer
+      idservico:
+        type: integer
+      nome:
+        type: string
+    type: object
   models.Cliente:
     properties:
       celular:
@@ -32,6 +54,43 @@ definitions:
       telefone:
         type: string
     type: object
+  models.Login:
+    properties:
+      id:
+        type: integer
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.Produtos:
+    properties:
+      descricao:
+        type: string
+      fabricante:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      quantidade:
+        type: integer
+      valorcusto:
+        type: number
+      valorvenda:
+        type: number
+    type: object
+  models.Servico:
+    properties:
+      id:
+        type: integer
+      nome:
+        type: string
+      tempo:
+        type: number
+      valor:
+        type: number
+    type: object
 info:
   contact: {}
 paths:
@@ -44,6 +103,91 @@ paths:
       summary: Todos Atendentes
       tags:
       - Atendentes
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo atendente no banco de dados
+      parameters:
+      - description: Json Atendente
+        in: body
+        name: atendente
+        required: true
+        schema:
+          $ref: '#/definitions/models.Atendente'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Atendente não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Atendente
+      tags:
+      - Atendentes
+  /api/v1/atendentes/{id}:
+    delete:
+      description: Remove o atendente indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Atendente
+      tags:
+      - Atendentes
+    get:
+      description: Obtem  o json de um determinado atendente, filtrado por id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendente não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendente por Id
+      tags:
+      - Atendentes
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado atendente no banco de
+        dados
+      parameters:
+      - description: Json Atendente
+        in: body
+        name: atendente
+        required: true
+        schema:
+          $ref: '#/definitions/models.Atendente'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Atendente não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Atendente
+      tags:
+      - Atendentes
   /api/v1/atendimentos:
     get:
       description: Obtem todos os atendimentos vindos do banco de dados
@@ -51,6 +195,91 @@ paths:
       - application/json
       responses: {}
       summary: Todos Atendimentos
+      tags:
+      - Atendimentos
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo atendimento no banco de dados
+      parameters:
+      - description: Json Atendimento
+        in: body
+        name: atendimento
+        required: true
+        schema:
+          $ref: '#/definitions/models.Atendimento'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Atendimento não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Atendimento
+      tags:
+      - Atendimentos
+  /api/v1/atendimentos/{id}:
+    delete:
+      description: Remove o atendente indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Atendimento
+      tags:
+      - Atendimentos
+    get:
+      description: Obtem  o json de um determinado atendimento, filtrado por id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendimento não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendimento por Id
+      tags:
+      - Atendimentos
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado atendimento no banco
+        de dados
+      parameters:
+      - description: Json Atendimento
+        in: body
+        name: atendimento
+        required: true
+        schema:
+          $ref: '#/definitions/models.Atendimento'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Atendimento não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Atendimento
       tags:
       - Atendimentos
   /api/v1/clientes:
@@ -117,7 +346,7 @@ paths:
           description: Cliente não encontrado
           schema:
             $ref: '#/definitions/httputil.HTTPError'
-      summary: Cliente por Id
+      summary: Busca Cliente por Id
       tags:
       - Clientes
     patch:
@@ -155,6 +384,94 @@ paths:
       summary: Todos Usuários
       tags:
       - Logins
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo login no banco de dados
+      parameters:
+      - description: Json Login
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Login não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Login
+      tags:
+      - Logins
+  /api/v1/login/:
+    post:
+      consumes:
+      - application/json
+      description: Obtem o json de um determinado login, filtrado por username
+      parameters:
+      - description: Json Login
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Login não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Usuário
+      tags:
+      - Logins
+  /api/v1/login/{id}:
+    delete:
+      description: Remove o login indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Login
+      tags:
+      - Logins
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado login no banco de dados
+      parameters:
+      - description: Json Login
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Login não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Login
+      tags:
+      - Logins
   /api/v1/produtos:
     get:
       description: Obtem todos os produtos vindos do banco de dados
@@ -164,4 +481,181 @@ paths:
       summary: Todos Produtos
       tags:
       - Produtos
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo produto no banco de dados
+      parameters:
+      - description: Json Produto
+        in: body
+        name: produto
+        required: true
+        schema:
+          $ref: '#/definitions/models.Produtos'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Produto não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Produto
+      tags:
+      - Produtos
+  /api/v1/produtos/{id}:
+    delete:
+      description: Remove o produto indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Produto
+      tags:
+      - Produtos
+    get:
+      description: Obtem  o json de um determinado produto, filtrado por id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Produto não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Produto por Id
+      tags:
+      - Produtos
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado produto no banco de dados
+      parameters:
+      - description: Json Produto
+        in: body
+        name: produto
+        required: true
+        schema:
+          $ref: '#/definitions/models.Produtos'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Produto não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Produto
+      tags:
+      - Produtos
+  /api/v1/servicos:
+    get:
+      description: Obtem todos os serviços vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Serviços
+      tags:
+      - Serviços
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo serviço no banco de dados
+      parameters:
+      - description: Json Serviço
+        in: body
+        name: servico
+        required: true
+        schema:
+          $ref: '#/definitions/models.Servico'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Serviço não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Serviço
+      tags:
+      - Serviços
+  /api/v1/servicos/{id}:
+    delete:
+      description: Remove o serviço indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Serviço
+      tags:
+      - Serviços
+    get:
+      description: Obtem  o json de um determinado serviço, filtrado por id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Serviço não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Serviço por Id
+      tags:
+      - Serviços
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado serviço no banco de dados
+      parameters:
+      - description: Json Serviços
+        in: body
+        name: produto
+        required: true
+        schema:
+          $ref: '#/definitions/models.Servico'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Serviço não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Serviço
+      tags:
+      - Serviços
 swagger: "2.0"
