@@ -1,0 +1,167 @@
+definitions:
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Cliente:
+    properties:
+      celular:
+        type: string
+      cpf:
+        type: string
+      datanascimento:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      nome:
+        type: string
+      profissao:
+        type: string
+      rg:
+        maxLength: 13
+        type: string
+      sexo:
+        type: string
+      telefone:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/atendentes:
+    get:
+      description: Obtem todos os atendentes vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Atendentes
+      tags:
+      - Atendentes
+  /api/v1/atendimentos:
+    get:
+      description: Obtem todos os atendimentos vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Atendimentos
+      tags:
+      - Atendimentos
+  /api/v1/clientes:
+    get:
+      description: Obtem todos os clientes vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Clientes
+      tags:
+      - Clientes
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo cliente no banco de dados
+      parameters:
+      - description: Json Cliente
+        in: body
+        name: cliente
+        required: true
+        schema:
+          $ref: '#/definitions/models.Cliente'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Cliente não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Cliente
+      tags:
+      - Clientes
+  /api/v1/clientes/{id}:
+    delete:
+      description: Remove o cliente indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Cliente
+      tags:
+      - Clientes
+    get:
+      description: Obtem  o json de um determinado cliente, filtrado por id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Cliente não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Cliente por Id
+      tags:
+      - Clientes
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado cliente no banco de dados
+      parameters:
+      - description: Json Cliente
+        in: body
+        name: cliente
+        required: true
+        schema:
+          $ref: '#/definitions/models.Cliente'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Cliente não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Cliente
+      tags:
+      - Clientes
+  /api/v1/login:
+    get:
+      description: Obtem todos os logins vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Usuários
+      tags:
+      - Logins
+  /api/v1/produtos:
+    get:
+      description: Obtem todos os produtos vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Produtos
+      tags:
+      - Produtos
+swagger: "2.0"

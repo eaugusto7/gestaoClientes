@@ -7,10 +7,15 @@ import (
 	"github.com/eaugusto7/gestaoClientes/controllers"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/handlers"
+
+	docs "github.com/eaugusto7/gestaoClientes/docs"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func HandleRequest() {
 	r := gin.Default()
+	docs.SwaggerInfo.BasePath = "/"
 	r.Static("/assets", "./assets")
 
 	//CRUD Clientes
@@ -56,5 +61,6 @@ func HandleRequest() {
 	r.DELETE("/api/v1/login/:id", controllers.DeleteLogin)
 
 	//Define para a utilizar a porta 8090
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }

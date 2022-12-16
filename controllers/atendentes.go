@@ -6,9 +6,16 @@ import (
 	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/swag/example/celler/httputil"
 )
 
-//Obtem todos os atendentes vindos do banco de dados
+// GetAllAtendentes godoc
+// @Summary Todos Atendentes
+// @Description Obtem todos os atendentes vindos do banco de dados
+// @Tags Atendentes
+// @Produce json
+// @Sucess 200 [object] model.Atendente
+// @Router /api/v1/atendentes [get]
 func GetAllAtendentes(context *gin.Context) {
 	var atendente []models.Atendente
 	database.Database.Find(&atendente)

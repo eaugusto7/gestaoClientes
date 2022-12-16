@@ -8,7 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Obtem todos os produtos vindos do banco de dados
+//
+// GetAllProdutos godoc
+// @Summary Todos Produtos
+// @Description Obtem todos os produtos vindos do banco de dados
+// @Tags Produtos
+// @Produce json
+// @Sucess 200 [object] model.Produtos
+// @Router /api/v1/produtos [get]
 func GetAllProdutos(context *gin.Context) {
 	var produtos []models.Produtos
 	database.Database.Find(&produtos)

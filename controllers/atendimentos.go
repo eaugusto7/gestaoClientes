@@ -8,7 +8,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Obtem todos os atendimentos vindos do banco de dados
+// GetAllAtendimentos godoc
+// @Summary Todos Atendimentos
+// @Description Obtem todos os atendimentos vindos do banco de dados
+// @Tags Atendimentos
+// @Produce json
+// @Sucess 200 [object] model.Atendimento
+// @Router /api/v1/atendimentos [get]
 func GetAllAtendimentos(context *gin.Context) {
 	var atendimento []models.Atendimento
 	database.Database.Find(&atendimento)

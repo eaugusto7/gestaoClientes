@@ -11,7 +11,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//Obtem todos os logins vindos do banco de dados
+// GetAllLogin godoc
+// @Summary Todos Usuários
+// @Description Obtem todos os logins vindos do banco de dados
+// @Tags Logins
+// @Produce json
+// @Sucess 200 [object] model.Login
+// @Router /api/v1/login [get]
 func GetAllLogin(context *gin.Context) {
 	var login []models.Login
 	var loginHelper []models.Login
