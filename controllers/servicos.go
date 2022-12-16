@@ -93,6 +93,13 @@ func UpdateServico(context *gin.Context) {
 			"Message": error.Error()})
 		return
 	}
+
+	if servico.Id == 0 {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Não encontrado"})
+		return
+	}
+
 	database.Database.Save(&servico)
 	context.JSON(http.StatusOK, servico)
 }

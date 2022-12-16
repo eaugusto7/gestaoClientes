@@ -96,6 +96,12 @@ func UpdateAtendente(context *gin.Context) {
 		return
 	}
 
+	if atendente.Id == 0 {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Não encontrado"})
+		return
+	}
+
 	database.Database.Save(&atendente)
 	context.JSON(http.StatusOK, atendente)
 }

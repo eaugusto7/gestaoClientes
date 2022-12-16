@@ -127,6 +127,12 @@ func UpdateLogin(context *gin.Context) {
 		return
 	}
 
+	if login.Id == 0 {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Não encontrado"})
+		return
+	}
+
 	//Transforma a senha em md5 antes de gravar no banco de dados
 	hasher := md5.New()
 	hasher.Write([]byte(login.Password))

@@ -95,6 +95,13 @@ func UpdateProduto(context *gin.Context) {
 			"Message": error.Error()})
 		return
 	}
+
+	if produto.Id == 0 {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"Message": "Não encontrado"})
+		return
+	}
+
 	database.Database.Save(&produto)
 	context.JSON(http.StatusOK, produto)
 }
