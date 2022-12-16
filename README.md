@@ -7,3 +7,6 @@ Iniciar a aplicação: go run main.go
 
 Instalar Swagger: go install github.com/swaggo/swag/cmd/swag@latest
 Iniciar Swagger: swag init --parseDependency --parseInternal --parseDepth 1
+
+
+![Swagger](https://user-images.githubusercontent.com/53271581/208182134-7a153f0f-c3fb-44e1-8a20-4d13cbada19a.png)
