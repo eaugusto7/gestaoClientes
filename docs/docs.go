@@ -436,6 +436,146 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/horarios": {
+            "get": {
+                "description": "Obtem todos os quadros de horários vindos do banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Todos Quadros de Horários",
+                "responses": {}
+            },
+            "post": {
+                "description": "Cria um novo quadro de horários no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Insere Quadro de Horários",
+                "parameters": [
+                    {
+                        "description": "Json Quadroshorario",
+                        "name": "atendente",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Quadroshorarios"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Erro: Quadro de horários não cadastrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/horarios/{id}": {
+            "get": {
+                "description": "Obtem  o json de um determinado quadro de horários, filtrado por id",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Busca Horario por Id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Quadro de horários não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove o quadro de horário indicado pelo id no banco de dados",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Deleta Quadro de Horários",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Atualiza as informações de um determinado quadro de horários no banco de dados",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Atualiza Quadro de Horário",
+                "parameters": [
+                    {
+                        "description": "Json Quadro de Horarios",
+                        "name": "produto",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Quadroshorarios"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Erro: Quadro de horários não existe",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/login": {
             "get": {
                 "description": "Obtem todos os logins vindos do banco de dados",
@@ -884,6 +1024,9 @@ const docTemplate = `{
                 "id": {
                     "type": "integer"
                 },
+                "idquadrohorario": {
+                    "type": "integer"
+                },
                 "nome": {
                     "type": "string"
                 },
@@ -895,6 +1038,9 @@ const docTemplate = `{
         "models.Atendimento": {
             "type": "object",
             "properties": {
+                "formapagamento": {
+                    "type": "string"
+                },
                 "horario": {
                     "type": "number"
                 },
@@ -909,6 +1055,12 @@ const docTemplate = `{
                 },
                 "nome": {
                     "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "statusfixo": {
+                    "type": "boolean"
                 }
             }
         },
@@ -985,6 +1137,56 @@ const docTemplate = `{
                 },
                 "valorvenda": {
                     "type": "number"
+                }
+            }
+        },
+        "models.Quadroshorarios": {
+            "type": "object",
+            "properties": {
+                "domingo": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "quarta": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "quinta": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "sabado": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "segunda": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "sexta": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "terca": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
                 }
             }
         },

@@ -60,6 +60,13 @@ func HandleRequest() {
 	r.PATCH("/api/v1/login/:id", controllers.UpdateLogin)
 	r.DELETE("/api/v1/login/:id", controllers.DeleteLogin)
 
+	//CRUD - Quadro de Horários
+	r.POST("/api/v1/horarios", controllers.InsertQuadroHorario)
+	r.GET("/api/v1/horarios", controllers.GetAllHorarios)
+	r.GET("/api/v1/horarios/:id", controllers.GetHorarioById)
+	r.PATCH("/api/v1/horarios/:id", controllers.UpdateHorarios)
+	r.DELETE("/api/v1/horarios/:id", controllers.DeleteHorario)
+
 	//Define para a utilizar a porta 8090
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	log.Fatal(http.ListenAndServe(":8090", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))

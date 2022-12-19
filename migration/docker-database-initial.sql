@@ -51,3 +51,14 @@ create table logins(
     username varchar,
     password varchar
 );
+
+create table quadroshorarios(
+    id serial primary key,
+    domingo int[],
+    segunda int[],
+    terca int[],
+    quarta int[],
+    quinta int[],
+    sexta int[],
+    sabado int[]
+);

@@ -12,6 +12,8 @@ definitions:
     properties:
       id:
         type: integer
+      idquadrohorario:
+        type: integer
       nome:
         type: string
       telefone:
@@ -19,6 +21,8 @@ definitions:
     type: object
   models.Atendimento:
     properties:
+      formapagamento:
+        type: string
       horario:
         type: number
       id:
@@ -29,6 +33,10 @@ definitions:
         type: integer
       nome:
         type: string
+      status:
+        type: string
+      statusfixo:
+        type: boolean
     type: object
   models.Cliente:
     properties:
@@ -79,6 +87,39 @@ definitions:
         type: number
       valorvenda:
         type: number
+    type: object
+  models.Quadroshorarios:
+    properties:
+      domingo:
+        items:
+          type: integer
+        type: array
+      id:
+        type: integer
+      quarta:
+        items:
+          type: integer
+        type: array
+      quinta:
+        items:
+          type: integer
+        type: array
+      sabado:
+        items:
+          type: integer
+        type: array
+      segunda:
+        items:
+          type: integer
+        type: array
+      sexta:
+        items:
+          type: integer
+        type: array
+      terca:
+        items:
+          type: integer
+        type: array
     type: object
   models.Servico:
     properties:
@@ -375,6 +416,101 @@ paths:
       summary: Atualiza Cliente
       tags:
       - Clientes
+  /api/v1/horarios:
+    get:
+      description: Obtem todos os quadros de horários vindos do banco de dados
+      produces:
+      - application/json
+      responses: {}
+      summary: Todos Quadros de Horários
+      tags:
+      - Quadro de Horários
+    post:
+      consumes:
+      - application/json
+      description: Cria um novo quadro de horários no banco de dados
+      parameters:
+      - description: Json Quadroshorario
+        in: body
+        name: atendente
+        required: true
+        schema:
+          $ref: '#/definitions/models.Quadroshorarios'
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: 'Erro: Quadro de horários não cadastrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Insere Quadro de Horários
+      tags:
+      - Quadro de Horários
+  /api/v1/horarios/{id}:
+    delete:
+      description: Remove o quadro de horário indicado pelo id no banco de dados
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Não encontrado'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta Quadro de Horários
+      tags:
+      - Quadro de Horários
+    get:
+      description: Obtem  o json de um determinado quadro de horários, filtrado por
+        id
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Quadro de horários não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Horario por Id
+      tags:
+      - Quadro de Horários
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza as informações de um determinado quadro de horários no
+        banco de dados
+      parameters:
+      - description: Json Quadro de Horarios
+        in: body
+        name: produto
+        required: true
+        schema:
+          $ref: '#/definitions/models.Quadroshorarios'
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "400":
+          description: 'Erro: Quadro de horários não existe'
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza Quadro de Horário
+      tags:
+      - Quadro de Horários
   /api/v1/login:
     get:
       description: Obtem todos os logins vindos do banco de dados

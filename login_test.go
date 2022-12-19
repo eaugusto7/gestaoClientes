@@ -21,7 +21,7 @@ import (
 var ID_Login int
 
 type JsonEdicaoLogin struct {
-	Nome string
+	Username string
 }
 
 func CriaLoginMock() {
@@ -115,7 +115,7 @@ func TestUpdateLogin(t *testing.T) {
 	r.PATCH("/api/v1/login/"+strconv.Itoa(ID_Login), controllers.UpdateLogin)
 
 	var modeloJson JsonEdicaoLogin
-	modeloJson.Nome = "Teste de Edição do User"
+	modeloJson.Username = "Teste de Edição do User"
 	valorJson, _ := json.Marshal(modeloJson)
 
 	req, _ := http.NewRequest("PATCH", "/api/v1/login/"+strconv.Itoa(ID_Login), bytes.NewBuffer(valorJson))
