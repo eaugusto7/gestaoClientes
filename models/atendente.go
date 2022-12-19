@@ -3,9 +3,10 @@ package models
 import "gopkg.in/validator.v2"
 
 type Atendente struct {
-	Id       int
-	Nome     string `json:"nome"`
-	Telefone string `json:"telefone" validate:"regexp=^[(]+[0-9]+[)]+[0-9]{9}"`
+	Id              int
+	Nome            string `json:"nome"`
+	Celular         string `json:"telefone" validate:"regexp=^[(]+[0-9]+[)]+[0-9]{9}"`
+	Idquadrohorario int
 }
 
 func ValidaDadosAtendente(atendente *Atendente) error {

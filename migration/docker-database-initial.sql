@@ -4,7 +4,7 @@ create table clientes(
     cpf varchar,
     rg varchar,
     email varchar,
-    telefone varchar,
+    celular2 varchar,
     celular varchar,
     dataNascimento varchar,
     sexo varchar,
@@ -23,13 +23,17 @@ create table atendimentos(
     nome varchar,
     horario numeric,
     idservico int,
-    idatendente int
+    idatendente int,
+    status varchar,
+    statusfixo boolean,
+    formapagamento varchar
 );
 
 create table atendentes(
     id serial primary key,
     nome varchar,
-    telefone varchar
+    celular varchar,
+    idquadrohorario int
 );
 
 create table produtos(

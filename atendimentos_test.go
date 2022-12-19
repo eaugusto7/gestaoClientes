@@ -20,9 +20,12 @@ var ID_Atendimentos int
 
 func CriaAtendimentoMock() {
 	atendimento := models.Atendimento{Nome: "Atendimento de Teste",
-		Horario:     14.00,
-		Idservico:   2,
-		Idatendente: 1,
+		Horario:        14.00,
+		Idservico:      2,
+		Idatendente:    1,
+		Status:         "Em Andamento",
+		Statusfixo:     false,
+		Formapagamento: "Não Informado",
 	}
 	database.Database.Create(&atendimento)
 	ID_Atendimentos = int(atendimento.Id)
@@ -30,9 +33,12 @@ func CriaAtendimentoMock() {
 
 func CriaAtendimentoModel() models.Atendimento {
 	atendimento := models.Atendimento{Nome: "Atendimento de Teste",
-		Horario:     14.00,
-		Idservico:   2,
-		Idatendente: 1,
+		Horario:        14.00,
+		Idservico:      2,
+		Idatendente:    1,
+		Status:         "Em Andamento",
+		Statusfixo:     false,
+		Formapagamento: "Não Informado",
 	}
 	return atendimento
 }

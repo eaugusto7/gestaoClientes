@@ -21,7 +21,8 @@ var ID_Atendente int
 //Criar um mock que realiza gravação no banco de dados
 func CriaAtendenteMock() {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
-		Telefone: "(00)000000000",
+		Celular:         "(00)000000000",
+		Idquadrohorario: 1,
 	}
 	database.Database.Create(&atendente)
 	ID_Atendente = int(atendente.Id)
@@ -30,7 +31,8 @@ func CriaAtendenteMock() {
 //Criar um modelo, não realiza gravação no banco de dados
 func CriaAtendenteModel() models.Atendente {
 	atendente := models.Atendente{Nome: "Atendente de Teste",
-		Telefone: "(00)000000000",
+		Celular:         "(00)000000000",
+		Idquadrohorario: 1,
 	}
 	return atendente
 }
@@ -68,7 +70,7 @@ func TestGetAtendenteById(t *testing.T) {
 	json.Unmarshal(resposta.Body.Bytes(), &atendenteMock)
 
 	assert.Equal(t, "Atendente de Teste", atendenteMock.Nome, " - Deveriam ter nomes iguais")
-	assert.Equal(t, "(00)000000000", atendenteMock.Telefone)
+	assert.Equal(t, "(00)000000000", atendenteMock.Celular)
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
 
