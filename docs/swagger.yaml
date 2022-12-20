@@ -231,6 +231,25 @@ paths:
       summary: Atualiza Atendente
       tags:
       - Atendentes
+  /api/v1/atendentes/nome/{nome}:
+    get:
+      description: Obtem  o json de um determinado atendente, filtrado por nome
+      parameters:
+      - description: Nome
+        in: path
+        name: nome
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendente não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendente por Nome
+      tags:
+      - Atendentes
   /api/v1/atendimentos:
     get:
       description: Obtem todos os atendimentos vindos do banco de dados

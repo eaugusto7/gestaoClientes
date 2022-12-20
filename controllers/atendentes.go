@@ -44,6 +44,29 @@ func GetAtendenteById(context *gin.Context) {
 	context.JSON(http.StatusOK, atendente)
 }
 
+// GetAtendenteByName godoc
+// @Summary Busca Atendente por Nome
+// @Description Obtem  o json de um determinado atendente, filtrado por nome
+// @Tags Atendentes
+// @Produce json
+// @Param   nome     path    string     true        "Nome"
+// @Sucess 200 {object} model.Atendente
+// @Failure 404 {object} httputil.HTTPError "Atendente não encontrado"
+// @Router /api/v1/atendentes/nome/{nome} [get]
+func GetAtendenteByName(context *gin.Context) {
+	var atendente models.Atendente
+	nome := context.Params.ByName("nome")
+
+	database.Database.Where("nome like ?", "%"+nome+"%").Find(&atendente)
+
+	if atendente.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Message": "Atendente não encontrado"})
+		return
+	}
+	context.JSON(http.StatusOK, atendente)
+}
+
 // InsertAtendente godoc
 // @Summary Insere Atendente
 // @Description Cria um novo atendente no banco de dados

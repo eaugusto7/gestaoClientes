@@ -49,6 +49,35 @@
                 }
             }
         },
+        "/api/v1/atendentes/nome/{nome}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendente, filtrado por nome",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendentes"
+                ],
+                "summary": "Busca Atendente por Nome",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nome",
+                        "name": "nome",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendente não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/atendentes/{id}": {
             "get": {
                 "description": "Obtem  o json de um determinado atendente, filtrado por id",

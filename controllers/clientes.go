@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	database "github.com/eaugusto7/gestaoClientes/database"
@@ -56,12 +55,8 @@ func GetClienteById(context *gin.Context) {
 func GetClienteByName(context *gin.Context) {
 	var cliente models.Cliente
 	nome := context.Params.ByName("nome")
-	//database.Database.First(&cliente, nome)
-
-	fmt.Println(nome)
 
 	database.Database.Where("nome like ?", "%"+nome+"%").Find(&cliente)
-	//database.Database.Where("nome = ?", nome).Find(&cliente)
 
 	if cliente.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
