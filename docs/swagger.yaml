@@ -608,6 +608,26 @@ paths:
       summary: Atualiza Quadro de Horário
       tags:
       - Quadro de Horários
+  /api/v1/horarios/atendente/{idatendente}:
+    get:
+      description: Obtem  o json de um determinado quadro de horários, filtrado por
+        atendente
+      parameters:
+      - description: IdAtendente
+        in: path
+        name: idatendente
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Quadro de horários não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Horario por Atendente
+      tags:
+      - Quadro de Horários
   /api/v1/login:
     get:
       description: Obtem todos os logins vindos do banco de dados

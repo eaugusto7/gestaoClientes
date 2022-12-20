@@ -69,6 +69,7 @@ func HandleRequest() {
 	r.POST("/api/v1/horarios", controllers.InsertQuadroHorario)
 	r.GET("/api/v1/horarios", controllers.GetAllHorarios)
 	r.GET("/api/v1/horarios/:id", controllers.GetHorarioById)
+	r.GET("/api/v1/horarios/atendente/:idatendente", controllers.GetHorarioByAtendente)
 	r.PATCH("/api/v1/horarios/:id", controllers.UpdateHorarios)
 	r.DELETE("/api/v1/horarios/:id", controllers.DeleteHorario)
 

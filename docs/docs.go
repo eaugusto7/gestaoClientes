@@ -626,6 +626,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/horarios/atendente/{idatendente}": {
+            "get": {
+                "description": "Obtem  o json de um determinado quadro de horários, filtrado por atendente",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Quadro de Horários"
+                ],
+                "summary": "Busca Horario por Atendente",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "IdAtendente",
+                        "name": "idatendente",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Quadro de horários não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/horarios/{id}": {
             "get": {
                 "description": "Obtem  o json de um determinado quadro de horários, filtrado por id",

@@ -44,6 +44,29 @@ func GetHorarioById(context *gin.Context) {
 	context.JSON(http.StatusOK, horario)
 }
 
+// GetHorarioByAtendente godoc
+// @Summary Busca Horario por Atendente
+// @Description Obtem  o json de um determinado quadro de horários, filtrado por atendente
+// @Tags Quadro de Horários
+// @Produce json
+// @Param   idatendente     path    int     true        "IdAtendente"
+// @Sucess 200 {object} model.Quadroshorarios
+// @Failure 404 {object} httputil.HTTPError "Quadro de horários não encontrado"
+// @Router /api/v1/horarios/atendente/{idatendente} [get]
+func GetHorarioByAtendente(context *gin.Context) {
+	var horario models.Quadroshorarios
+	idatendente := context.Params.ByName("idatendente")
+
+	database.Database.Table("quadroshorarios AS hor").Select("*").Joins("left join atendentes AS atend ON atend.idquadrohorario = hor.id").Where("atend.id = ?", idatendente).Find(&horario)
+
+	if horario.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Message": "Quadro de horários não encontrado"})
+		return
+	}
+	context.JSON(http.StatusOK, horario)
+}
+
 // InsertQuadroHorario godoc
 // @Summary Insere Quadro de Horários
 // @Description Cria um novo quadro de horários no banco de dados
