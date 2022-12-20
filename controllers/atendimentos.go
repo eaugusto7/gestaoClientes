@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
 
 	database "github.com/eaugusto7/gestaoClientes/database"
 	"github.com/eaugusto7/gestaoClientes/models"
@@ -40,6 +42,25 @@ func GetAtendimentoById(context *gin.Context) {
 			"Message": "Atendimento não encontrado"})
 		return
 	}
+
+	context.JSON(http.StatusOK, atendimento)
+}
+
+// GetAtendimentoByClienteId godoc
+// @Summary Busca Atendimento por Id Cliente
+// @Description Obtem  o json de um determinado atendimento, filtrado por idCliente
+// @Tags Atendimentos
+// @Produce json
+// @Param   idcliente     path    int     true        "IdCliente"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 404 {object} httputil.HTTPError "Atendimento não encontrado"
+// @Router /api/v1/atendimentos/clientes/{idcliente} [get]
+func GetAtendimentoByClienteId(context *gin.Context) {
+	var atendimento []models.Atendimento
+	idCliente, _ := strconv.Atoi(context.Params.ByName("idcliente"))
+
+	fmt.Println(idCliente)
+	database.Database.Where("idcliente = ?", idCliente).Find(&atendimento)
 
 	context.JSON(http.StatusOK, atendimento)
 }

@@ -23,6 +23,7 @@ func CriaAtendimentoMock() {
 		Horario:        14.00,
 		Idservico:      2,
 		Idatendente:    1,
+		Idcliente:      1,
 		Status:         "Em Andamento",
 		Statusfixo:     false,
 		Formapagamento: "Não Informado",
@@ -36,6 +37,7 @@ func CriaAtendimentoModel() models.Atendimento {
 		Horario:        14.00,
 		Idservico:      2,
 		Idatendente:    1,
+		Idcliente:      1,
 		Status:         "Em Andamento",
 		Statusfixo:     false,
 		Formapagamento: "Não Informado",
@@ -68,6 +70,27 @@ func TestGetAtendimentoById(t *testing.T) {
 	r := SetupDasRotasDeTeste()
 	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
 	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/"+strconv.Itoa(ID_Atendimentos), nil)
+	resposta := httptest.NewRecorder()
+	r.ServeHTTP(resposta, req)
+
+	var atendimentoMock models.Atendimento
+	json.Unmarshal(resposta.Body.Bytes(), &atendimentoMock)
+
+	assert.Equal(t, "Atendimento de Teste", atendimentoMock.Nome, " - Deveriam ter nomes iguais")
+	assert.Equal(t, 14.00, atendimentoMock.Horario)
+	assert.Equal(t, 1, atendimentoMock.Idatendente)
+	assert.Equal(t, 2, atendimentoMock.Idservico)
+
+	assert.Equal(t, http.StatusOK, resposta.Code)
+}
+
+func TestGetAtendimentoByClienteId(t *testing.T) {
+	database.ConectaBanco()
+	CriaAtendimentoMock()
+	defer DeletaAtendimentoMock()
+	r := SetupDasRotasDeTeste()
+	r.GET("/api/v1/atendimentos/clientes/:id", controllers.GetAtendimentoByClienteId)
+	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/clientes/"+strconv.Itoa(1), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 

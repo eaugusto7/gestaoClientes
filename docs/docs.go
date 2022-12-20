@@ -201,6 +201,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/atendimentos/clientes/{idcliente}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendimento, filtrado por idCliente",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Busca Atendimento por Id Cliente",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "IdCliente",
+                        "name": "idcliente",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendimento não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/atendimentos/{id}": {
             "get": {
                 "description": "Obtem  o json de um determinado atendimento, filtrado por id",
@@ -1048,6 +1077,9 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "idatendente": {
+                    "type": "integer"
+                },
+                "idcliente": {
                     "type": "integer"
                 },
                 "idservico": {

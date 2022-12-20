@@ -24,6 +24,7 @@ create table atendimentos(
     horario numeric,
     idservico int,
     idatendente int,
+    idcliente int,
     status varchar,
     statusfixo boolean,
     formapagamento varchar

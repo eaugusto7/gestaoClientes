@@ -6,6 +6,7 @@ type Atendimento struct {
 	Id             int
 	Idservico      int     `json:"idservico"`
 	Idatendente    int     `json:"idatendente"`
+	Idcliente      int     `json:"idcliente"`
 	Nome           string  `json:"nome"`
 	Horario        float64 `json:"horario"`
 	Status         string

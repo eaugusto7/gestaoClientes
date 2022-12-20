@@ -36,6 +36,7 @@ func HandleRequest() {
 	r.POST("/api/v1/atendimentos", controllers.InsertAtendimento)
 	r.GET("/api/v1/atendimentos", controllers.GetAllAtendimentos)
 	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
+	r.GET("/api/v1/atendimentos/clientes/:idcliente", controllers.GetAtendimentoByClienteId)
 	r.PATCH("/api/v1/atendimentos/:id", controllers.UpdateAtendimento)
 	r.DELETE("/api/v1/atendimentos/:id", controllers.DeleteAtendimento)
 

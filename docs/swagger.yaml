@@ -29,6 +29,8 @@ definitions:
         type: integer
       idatendente:
         type: integer
+      idcliente:
+        type: integer
       idservico:
         type: integer
       nome:
@@ -321,6 +323,25 @@ paths:
           schema:
             $ref: '#/definitions/httputil.HTTPError'
       summary: Atualiza Atendimento
+      tags:
+      - Atendimentos
+  /api/v1/atendimentos/clientes/{idcliente}:
+    get:
+      description: Obtem  o json de um determinado atendimento, filtrado por idCliente
+      parameters:
+      - description: IdCliente
+        in: path
+        name: idcliente
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendimento não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendimento por Id Cliente
       tags:
       - Atendimentos
   /api/v1/clientes:
