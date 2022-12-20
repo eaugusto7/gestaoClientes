@@ -428,6 +428,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/clientes/nome/{nome}": {
+            "get": {
+                "description": "Obtem  o json de um determinado cliente, filtrado por nome",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Clientes"
+                ],
+                "summary": "Busca Cliente por Nome",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Nome",
+                        "name": "nome",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Cliente não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/clientes/{id}": {
             "get": {
                 "description": "Obtem  o json de um determinado cliente, filtrado por id",
@@ -1108,6 +1137,9 @@ const docTemplate = `{
         "models.Atendente": {
             "type": "object",
             "properties": {
+                "celular": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -1115,9 +1147,6 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "nome": {
-                    "type": "string"
-                },
-                "telefone": {
                     "type": "string"
                 }
             }
@@ -1160,6 +1189,9 @@ const docTemplate = `{
                 "celular": {
                     "type": "string"
                 },
+                "celular2": {
+                    "type": "string"
+                },
                 "cpf": {
                     "type": "string"
                 },
@@ -1183,9 +1215,6 @@ const docTemplate = `{
                     "maxLength": 13
                 },
                 "sexo": {
-                    "type": "string"
-                },
-                "telefone": {
                     "type": "string"
                 }
             }

@@ -23,7 +23,7 @@ func CriaAtendimentoMock() {
 		Horario:        14.00,
 		Idservico:      2,
 		Idatendente:    1,
-		Idcliente:      1,
+		Idcliente:      100000,
 		Status:         "Em Andamento",
 		Statusfixo:     false,
 		Formapagamento: "Não Informado",
@@ -37,7 +37,7 @@ func CriaAtendimentoModel() models.Atendimento {
 		Horario:        14.00,
 		Idservico:      2,
 		Idatendente:    1,
-		Idcliente:      1,
+		Idcliente:      100000,
 		Status:         "Em Andamento",
 		Statusfixo:     false,
 		Formapagamento: "Não Informado",
@@ -90,7 +90,7 @@ func TestGetAtendimentoByClienteId(t *testing.T) {
 	defer DeletaAtendimentoMock()
 	r := SetupDasRotasDeTeste()
 	r.GET("/api/v1/atendimentos/clientes/:id", controllers.GetAtendimentoByClienteId)
-	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/clientes/"+strconv.Itoa(1), nil)
+	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/clientes/"+strconv.Itoa(100000), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 

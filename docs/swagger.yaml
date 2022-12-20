@@ -10,13 +10,13 @@ definitions:
     type: object
   models.Atendente:
     properties:
+      celular:
+        type: string
       id:
         type: integer
       idquadrohorario:
         type: integer
       nome:
-        type: string
-      telefone:
         type: string
     type: object
   models.Atendimento:
@@ -44,6 +44,8 @@ definitions:
     properties:
       celular:
         type: string
+      celular2:
+        type: string
       cpf:
         type: string
       datanascimento:
@@ -60,8 +62,6 @@ definitions:
         maxLength: 13
         type: string
       sexo:
-        type: string
-      telefone:
         type: string
     type: object
   models.Login:
@@ -473,6 +473,25 @@ paths:
           schema:
             $ref: '#/definitions/httputil.HTTPError'
       summary: Atualiza Cliente
+      tags:
+      - Clientes
+  /api/v1/clientes/nome/{nome}:
+    get:
+      description: Obtem  o json de um determinado cliente, filtrado por nome
+      parameters:
+      - description: Nome
+        in: path
+        name: nome
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Cliente não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Cliente por Nome
       tags:
       - Clientes
   /api/v1/horarios:

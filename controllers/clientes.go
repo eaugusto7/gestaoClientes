@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	database "github.com/eaugusto7/gestaoClientes/database"
@@ -34,6 +35,33 @@ func GetClienteById(context *gin.Context) {
 	var cliente models.Cliente
 	id := context.Params.ByName("id")
 	database.Database.First(&cliente, id)
+
+	if cliente.Id == 0 {
+		context.JSON(http.StatusNotFound, gin.H{
+			"Message": "Cliente não encontrado"})
+		return
+	}
+	context.JSON(http.StatusOK, cliente)
+}
+
+// GetClienteByName godoc
+// @Summary Busca Cliente por Nome
+// @Description Obtem  o json de um determinado cliente, filtrado por nome
+// @Tags Clientes
+// @Produce json
+// @Param   nome     path    string     true        "Nome"
+// @Sucess 200 {object} model.Cliente
+// @Failure 404 {object} httputil.HTTPError "Cliente não encontrado"
+// @Router /api/v1/clientes/nome/{nome} [get]
+func GetClienteByName(context *gin.Context) {
+	var cliente models.Cliente
+	nome := context.Params.ByName("nome")
+	//database.Database.First(&cliente, nome)
+
+	fmt.Println(nome)
+
+	database.Database.Where("nome like ?", "%"+nome+"%").Find(&cliente)
+	//database.Database.Where("nome = ?", nome).Find(&cliente)
 
 	if cliente.Id == 0 {
 		context.JSON(http.StatusNotFound, gin.H{
