@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -59,9 +58,41 @@ func GetAtendimentoByClienteId(context *gin.Context) {
 	var atendimento []models.Atendimento
 	idCliente, _ := strconv.Atoi(context.Params.ByName("idcliente"))
 
-	fmt.Println(idCliente)
 	database.Database.Where("idcliente = ?", idCliente).Find(&atendimento)
+	context.JSON(http.StatusOK, atendimento)
+}
 
+// GetAtendimentoByAtendenteId godoc
+// @Summary Busca Atendimento por Id Atendente
+// @Description Obtem  o json de um determinado atendimento, filtrado por idAtendente
+// @Tags Atendimentos
+// @Produce json
+// @Param   idatendente     path    int     true        "IdAtendente"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 404 {object} httputil.HTTPError "Atendimento não encontrado"
+// @Router /api/v1/atendimentos/atendentes/{idatendente} [get]
+func GetAtendimentoByAtendenteId(context *gin.Context) {
+	var atendimento []models.Atendimento
+	idatendente, _ := strconv.Atoi(context.Params.ByName("idatendente"))
+
+	database.Database.Where("idatendente = ?", idatendente).Find(&atendimento)
+	context.JSON(http.StatusOK, atendimento)
+}
+
+// GetAtendimentoByServicoId godoc
+// @Summary Busca Atendimento por Id Servioc
+// @Description Obtem  o json de um determinado atendimento, filtrado por idServico
+// @Tags Atendimentos
+// @Produce json
+// @Param   idservico     path    int     true        "IdServico"
+// @Sucess 200 {object} model.Atendimento
+// @Failure 404 {object} httputil.HTTPError "Atendimento não encontrado"
+// @Router /api/v1/atendimentos/servicos/{idservico} [get]
+func GetAtendimentoByServicoId(context *gin.Context) {
+	var atendimento []models.Atendimento
+	idservico, _ := strconv.Atoi(context.Params.ByName("idservico"))
+
+	database.Database.Where("idservico = ?", idservico).Find(&atendimento)
 	context.JSON(http.StatusOK, atendimento)
 }
 

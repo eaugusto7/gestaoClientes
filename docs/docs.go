@@ -201,6 +201,35 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/atendimentos/atendentes/{idatendente}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendimento, filtrado por idAtendente",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Busca Atendimento por Id Atendente",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "IdAtendente",
+                        "name": "idatendente",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendimento não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/atendimentos/clientes/{idcliente}": {
             "get": {
                 "description": "Obtem  o json de um determinado atendimento, filtrado por idCliente",
@@ -216,6 +245,35 @@ const docTemplate = `{
                         "type": "integer",
                         "description": "IdCliente",
                         "name": "idcliente",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Atendimento não encontrado",
+                        "schema": {
+                            "$ref": "#/definitions/httputil.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/atendimentos/servicos/{idservico}": {
+            "get": {
+                "description": "Obtem  o json de um determinado atendimento, filtrado por idServico",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Atendimentos"
+                ],
+                "summary": "Busca Atendimento por Id Servioc",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "IdServico",
+                        "name": "idservico",
                         "in": "path",
                         "required": true
                     }

@@ -37,6 +37,8 @@ func HandleRequest() {
 	r.GET("/api/v1/atendimentos", controllers.GetAllAtendimentos)
 	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
 	r.GET("/api/v1/atendimentos/clientes/:idcliente", controllers.GetAtendimentoByClienteId)
+	r.GET("/api/v1/atendimentos/atendentes/:idatendente", controllers.GetAtendimentoByAtendenteId)
+	r.GET("/api/v1/atendimentos/servicos/:idservico", controllers.GetAtendimentoByServicoId)
 	r.PATCH("/api/v1/atendimentos/:id", controllers.UpdateAtendimento)
 	r.DELETE("/api/v1/atendimentos/:id", controllers.DeleteAtendimento)
 

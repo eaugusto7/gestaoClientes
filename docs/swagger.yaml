@@ -325,6 +325,25 @@ paths:
       summary: Atualiza Atendimento
       tags:
       - Atendimentos
+  /api/v1/atendimentos/atendentes/{idatendente}:
+    get:
+      description: Obtem  o json de um determinado atendimento, filtrado por idAtendente
+      parameters:
+      - description: IdAtendente
+        in: path
+        name: idatendente
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendimento não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendimento por Id Atendente
+      tags:
+      - Atendimentos
   /api/v1/atendimentos/clientes/{idcliente}:
     get:
       description: Obtem  o json de um determinado atendimento, filtrado por idCliente
@@ -342,6 +361,25 @@ paths:
           schema:
             $ref: '#/definitions/httputil.HTTPError'
       summary: Busca Atendimento por Id Cliente
+      tags:
+      - Atendimentos
+  /api/v1/atendimentos/servicos/{idservico}:
+    get:
+      description: Obtem  o json de um determinado atendimento, filtrado por idServico
+      parameters:
+      - description: IdServico
+        in: path
+        name: idservico
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "404":
+          description: Atendimento não encontrado
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Busca Atendimento por Id Servioc
       tags:
       - Atendimentos
   /api/v1/clientes:
