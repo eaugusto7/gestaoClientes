@@ -67,6 +67,7 @@ func TestGetAtendimentoById(t *testing.T) {
 	database.ConectaBanco()
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
+
 	r := SetupDasRotasDeTeste()
 	r.GET("/api/v1/atendimentos/:id", controllers.GetAtendimentoById)
 	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/"+strconv.Itoa(ID_Atendimentos), nil)
@@ -88,19 +89,20 @@ func TestGetAtendimentoByClienteId(t *testing.T) {
 	database.ConectaBanco()
 	CriaAtendimentoMock()
 	defer DeletaAtendimentoMock()
+
 	r := SetupDasRotasDeTeste()
-	r.GET("/api/v1/atendimentos/clientes/:id", controllers.GetAtendimentoByClienteId)
+	r.GET("/api/v1/atendimentos/clientes/:idcliente", controllers.GetAtendimentoByClienteId)
 	req, _ := http.NewRequest("GET", "/api/v1/atendimentos/clientes/"+strconv.Itoa(100000), nil)
 	resposta := httptest.NewRecorder()
 	r.ServeHTTP(resposta, req)
 
-	var atendimentoMock models.Atendimento
+	var atendimentoMock []models.Atendimento
 	json.Unmarshal(resposta.Body.Bytes(), &atendimentoMock)
 
-	assert.Equal(t, "Atendimento de Teste", atendimentoMock.Nome, " - Deveriam ter nomes iguais")
-	assert.Equal(t, 14.00, atendimentoMock.Horario)
-	assert.Equal(t, 1, atendimentoMock.Idatendente)
-	assert.Equal(t, 2, atendimentoMock.Idservico)
+	assert.Equal(t, "Atendimento de Teste", atendimentoMock[0].Nome, " - Deveriam ter nomes iguais")
+	assert.Equal(t, 14.00, atendimentoMock[0].Horario)
+	assert.Equal(t, 1, atendimentoMock[0].Idatendente)
+	assert.Equal(t, 2, atendimentoMock[0].Idservico)
 
 	assert.Equal(t, http.StatusOK, resposta.Code)
 }
