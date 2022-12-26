@@ -9,6 +9,6 @@ import (
 
 func main() {
 	db.ConectaBanco()
-	fmt.Println("Iniciando Servidor...")
+	fmt.Println("Iniciando Servidor... ")
 	routes.HandleRequest()
 }
