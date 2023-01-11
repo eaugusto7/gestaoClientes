@@ -3,7 +3,7 @@ package models
 import "gopkg.in/validator.v2"
 
 type Cliente struct {
-	Id             int
+	Id             int    `json:"id,omitempty"` //Caso seja vazio não pega no Json Marshall
 	Nome           string `json:"nome" validate:"nonzero"`
 	Cpf            string `json:"cpf" validate:"len=14"`
 	Rg             string `json:"rg" validate:"max=13"`

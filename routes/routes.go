@@ -6,6 +6,7 @@ import (
 
 	"github.com/eaugusto7/gestaoClientes/controllers"
 	"github.com/gin-gonic/gin"
+
 	"github.com/gorilla/handlers"
 
 	docs "github.com/eaugusto7/gestaoClientes/docs"
@@ -15,6 +16,25 @@ import (
 
 func HandleRequest() {
 	r := gin.Default()
+
+	/*middleware, _ := opamiddleware.NewGinMiddleware(
+		&config.Config{
+			URL:              "http://localhost:8080/",
+			Query:            "data.policy.allow",
+			ExceptedResult:   true,
+			DeniedStatusCode: 200,
+			DeniedMessage:    "Forbidden",
+		},
+		func(c *gin.Context) (map[string]interface{}, error) {
+			return map[string]interface{}{
+				"path":   c.Request.URL.Path,
+				"method": c.Request.Method,
+			}, nil
+		},
+	)
+
+	r.Use(middleware.Use())*/
+
 	docs.SwaggerInfo.BasePath = "/"
 	r.Static("/assets", "./assets")
 
